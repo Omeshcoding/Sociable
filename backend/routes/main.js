@@ -4,3 +4,5 @@ const router = express.Router();
 router.get('/', (res, req) => {
   console.log('hey ya');
 });
+
+module.exports = router;
