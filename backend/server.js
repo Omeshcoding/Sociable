@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const mainRoutes = require('./routes/main');
 const postRoutes = require('./routes/posts');
+const usersRouter = require('./models/user');
 const connectToDB = require('./config/db');
 
 // Load configuration
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 // Routes that server is listening to
 app.use('/', mainRoutes);
 app.use('/post', postRoutes);
+app.use('/users', usersRouter);
 
 const PORT = process.env.PORT || 4000;
 

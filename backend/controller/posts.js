@@ -1,5 +1,5 @@
 const Post = require('../models/Post');
-
+const User = require('../models/user');
 module.exports = {
   getFeed: async (req, res) => {
     try {
@@ -19,15 +19,18 @@ module.exports = {
   },
   createPost: async (req, res) => {
     const body = req.body;
-
-    const post = await Post.create({
+    const user = await User.findById(body.userId);
+    const post = new Post({
       title: body.title,
       image: body.image,
       caption: body.caption,
       likes: body.likes,
+      user: user.id,
     });
-    console.log('post added');
-    res.status(201).json();
+    const savedPost = await post.save();
+    user.posts = user.posts.concat(savedPost._id);
+    await user.save();
+    res.status(201).json(post);
   },
   deletePost: async (req, res) => {
     try {

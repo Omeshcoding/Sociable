@@ -6,6 +6,10 @@ const postSchema = new mongoose.Schema({
   image: String,
   caption: String,
   likes: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 postSchema.set('toJSON', {
