@@ -1,14 +1,27 @@
 const mongoose = require('mongoose'); // Erase if already required
 
-// Declare the Schema of the Mongo model
+//  Declare the Schema of the Mongo model
 const postSchema = new mongoose.Schema({
-  title: String,
-  image: String,
-  caption: String,
+  title: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    // required: true,
+  },
+  caption: {
+    type: String,
+    // required: true
+  },
   likes: Number,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

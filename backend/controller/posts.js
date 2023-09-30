@@ -1,9 +1,13 @@
 const Post = require('../models/Post');
 const User = require('../models/user');
+
 module.exports = {
   getFeed: async (req, res) => {
     try {
-      const posts = await Post.find({});
+      const posts = await Post.find({}).populate('user', {
+        username: 1,
+        name: 1,
+      });
       res.json(posts);
     } catch (error) {
       console.log(error);
