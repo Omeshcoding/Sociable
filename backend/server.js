@@ -6,6 +6,8 @@ const mainRoutes = require('./routes/main');
 const postRoutes = require('./routes/posts');
 const usersRouter = require('./models/user');
 const connectToDB = require('./config/db');
+const errorHandler = require('./middleware/errorHaldler');
+const middleware = require('./middleware/auth');
 
 // Load configuration
 dotenv.config({ path: './.env' });
@@ -23,10 +25,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Routes that server is listening to
+
+app.use(middleware.tokenExtractor);
 app.use('/', mainRoutes);
 app.use('/post', postRoutes);
 app.use('/users', usersRouter);
-
+app.use(errorHandler);
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {

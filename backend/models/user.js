@@ -11,7 +11,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  passworHash: String,
+  passwordHash: {
+    type: String,
+    required: true,
+  },
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +30,6 @@ userSchema.set('toJSON', {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
-    delete returnedObject.passwordHash;
   },
 });
 
