@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   getFeed: async (req, res) => {
@@ -23,13 +24,18 @@ module.exports = {
   },
   createPost: async (req, res) => {
     const body = req.body;
-    const user = await User.findById(body.userId);
+    const decodedToken = jwt.verify(req.token, process.env.SECRET);
+    if (!decodedToken.id) {
+      return res.status(401).json({ error: 'token invalid' });
+    }
+    const user = await User.findById(decodedToken.id);
+
     const post = new Post({
       title: body.title,
       image: body.image,
       caption: body.caption,
       likes: body.likes,
-      user: user.id,
+      user: user._id,
     });
     const savedPost = await post.save();
     user.posts = user.posts.concat(savedPost._id);
