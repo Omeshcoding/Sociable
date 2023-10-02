@@ -15,14 +15,16 @@ module.exports = {
   },
 
   userSignup: async (req, res) => {
-    const { username, name, password } = req.body;
+    const { email, name, password } = req.body;
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    const user = await User.create({
-      username,
+    const user = new User({
+      email,
       name,
       passwordHash,
     });
-    res.status(201).json(user);
+    const savedUser = await user.save();
+
+    res.status(201).json(savedUser);
   },
 };

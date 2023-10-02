@@ -1,3 +1,4 @@
+// const { res } = require('express');
 const Post = require('../models/Post');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
@@ -6,7 +7,7 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find({}).populate('user', {
-        username: 1,
+        email: 1,
         name: 1,
       });
       res.json(posts);
@@ -15,6 +16,7 @@ module.exports = {
     }
   },
   getSinglePost: async (req, res) => {
+    console.log(req.isAuthenticated);
     try {
       const post = await Post.findById(req.params.id);
       res.json(post);
@@ -43,12 +45,30 @@ module.exports = {
     res.status(201).json(post);
   },
   deletePost: async (req, res) => {
-    try {
+    const user = await Post.findById(req.params.id);
+    const userId = user?.user.toString();
+
+    if (userId === req.user) {
       await Post.findByIdAndRemove(req.params.id);
-      console.log('post  delete');
       res.status(204).end();
-    } catch (error) {
-      console.log(error);
+    } else {
+      res
+        .status(401)
+        .json({ error: 'invalid user sign in from different account' })
+        .end();
     }
+  },
+  likePost: async (req, res) => {
+    const { title, author, url, likes } = req.body;
+    const post = {
+      title: title,
+      author: author,
+      url: url,
+      likes: likes,
+    };
+    const savedPost = await Post.findByIdAndUpdate(req.params.id, post, {
+      new: true,
+    });
+    res.json(savedPost);
   },
 };
