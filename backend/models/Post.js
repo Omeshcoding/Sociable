@@ -8,11 +8,11 @@ const postSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    // required: true,
+    required: true,
   },
   caption: {
     type: String,
-    // required: true
+    required: true,
   },
   likes: Number,
   user: {
