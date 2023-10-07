@@ -1,5 +1,10 @@
+import Sidebar from '../Components/Sidebar';
 const Feed = () => {
-  return <div>Feed</div>;
+  return (
+    <main className="w-full">
+      <Sidebar />
+    </main>
+  );
 };
 
 export default Feed;
