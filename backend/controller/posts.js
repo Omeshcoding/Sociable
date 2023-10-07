@@ -2,6 +2,7 @@
 const Post = require('../models/Post');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('../middleware/cloudinary');
 
 module.exports = {
   getFeed: async (req, res) => {
@@ -26,15 +27,19 @@ module.exports = {
   },
   createPost: async (req, res) => {
     const body = req.body;
+    console.log(req.file);
     const decodedToken = jwt.verify(req.token, process.env.SECRET);
     if (!decodedToken.id) {
       return res.status(401).json({ error: 'token invalid' });
     }
     const user = await User.findById(decodedToken.id);
 
+    const photoUpload = await cloudinary.uploader.upload(req.file.path);
+
     const post = new Post({
       title: body.title,
-      image: body.image,
+      image: photoUpload.secure_url,
+      cloudinaryId: photoUpload.public_id,
       caption: body.caption,
       likes: body.likes,
       user: user._id,
