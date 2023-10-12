@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { ImHome3 } from 'react-icons/Im';
-import { BiNews } from 'react-icons/bi';
+import { BiNews, BiLogIn } from 'react-icons/bi';
+import { BsFillPersonFill } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   const [setshowNav, setSetshowNav] = useState(false);
   return (
-    <nav className="flex flex-col h-[100vh]  px-3 justify-center fixed top-0 bg-slate-400 gap-10 md:gap-16 lg:gap-20">
+    <nav className="flex flex-col h-[100%]  px-3 justify-center fixed top-0 bg-slate-400 gap-10 md:gap-16 lg:gap-20">
       <button
         type="button"
         className={` ${
@@ -17,20 +19,31 @@ const Sidebar = () => {
       >
         {setshowNav ? <AiOutlineClose /> : <MdKeyboardDoubleArrowRight />}
       </button>
-      <a href="#" className="flex align-center">
+      <Link to="/" className="flex align-center">
         {setshowNav && ' home'}
         <span className="ml-2 my-auto">
           <ImHome3 />
         </span>
-      </a>
-      <a href="#" className="flex align-center">
+      </Link>
+      <Link to="#" className="flex align-center">
         {setshowNav && ' my Feed'}
         <span className="ml-2 my-auto">
           <BiNews />
         </span>
-      </a>
-      <a href="#"> {setshowNav && ' Login/Signup'}</a>
-      <a href="#">{setshowNav && ' profile'}</a>
+      </Link>
+
+      <Link to="/profile" className="flex">
+        {setshowNav && ' profile'}
+        <span className=" ml-2 my-auto">
+          <BsFillPersonFill />
+        </span>{' '}
+      </Link>
+      <Link to="/" className="flex">
+        {setshowNav && ' Login/Signup'}
+        <span className=" ml-2 my-auto">
+          <BiLogIn />
+        </span>{' '}
+      </Link>
     </nav>
   );
 };

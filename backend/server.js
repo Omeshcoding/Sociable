@@ -8,6 +8,7 @@ const usersRouter = require('./models/user');
 const connectToDB = require('./config/db');
 const errorHandler = require('./middleware/errorHaldler');
 const middleware = require('./middleware/auth');
+const cors = require('cors');
 
 // Load configuration
 dotenv.config({ path: './.env' });
@@ -18,6 +19,7 @@ connectToDB();
 // Body Parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors);
 
 // Logging
 if (process.env.NODE_ENV === 'development') {

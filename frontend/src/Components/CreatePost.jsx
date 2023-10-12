@@ -12,13 +12,32 @@ const CreatePost = () => {
             <textarea
               name="post"
               cols="10"
+              rows="1"
+              className="my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
+              placeholder="Write you title"
+            />
+            <textarea
+              name="post"
+              cols="10"
               rows="4"
-              className="my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal"
+              className="my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
               placeholder="Write you thoughts ..."
             />
-            <button className="text-white text-[17px] font-normal px-4 py-1 bg-blue-600 rounded-lg border-none ml-auto">
-              Post your thought
-            </button>
+            <div className=" flex justify-between h-14">
+              <input
+                type="file"
+                name="myImage"
+                className="text-black text-[17px] font-normal px-2 py-2 bg-transparent rounded-lg border-gray-200 border-2"
+                // onChange={(event) => {
+                //   console.log(event.target.files[0]);
+                //   setSelectedImage(event.target.files[0]);
+                // }}
+              />
+
+              <button className="text-white text-[17px] font-normal px-4 py-1 bg-blue-600 rounded-lg border-none ml-auto">
+                Post your thought
+              </button>
+            </div>
           </div>
         </form>
       </>

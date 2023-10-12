@@ -1,12 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import Login from './Components/Login';
+import Login from './Pages/Login';
 import Feed from './Pages/Feed';
+import Profile from './Pages/Profile';
 function App() {
-  console.log('hello world');
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Feed />}></Route>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/feed" element={<Feed />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
       </Routes>
     </BrowserRouter>
   );
