@@ -1,8 +1,13 @@
-const Input = ({ type, label }) => {
+const Input = ({ type, label, value, setValue }) => {
   return (
     <div className="flex flex-col ">
       <label className="font-semibold">{label}:</label>
-      <input type={type} className="input-field" />
+      <input
+        type={type}
+        value={value}
+        className="input-field"
+        onChange={({ target }) => setValue(target.value)}
+      />
     </div>
   );
 };

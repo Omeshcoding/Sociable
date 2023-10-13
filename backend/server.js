@@ -19,15 +19,14 @@ connectToDB();
 // Body Parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors);
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
 // Routes that server is listening to
 
+app.use(cors());
 app.use(middleware.tokenExtractor);
 app.use('/', mainRoutes);
 app.use('/post', postRoutes);
