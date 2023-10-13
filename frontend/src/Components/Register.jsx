@@ -1,8 +1,7 @@
-import Button from '../Components/Button';
-import Input from '../Components/Input';
-import '../styles/login.css';
+import Input from './Input';
+import Button from './Button';
 
-const Login = () => {
+const Register = () => {
   return (
     <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
       <div className="bg-red-50 h-auto w-[500px] rounded-lg p-6 ">
@@ -12,12 +11,12 @@ const Login = () => {
         <form className="flex flex-col mx-auto gap-4 w-[60%]">
           <Input type="email" label="Email" />
           <Input type="password" label="Password" />
-          <Button route="/feed" buttonType="Login" />
-          <Button route="/register" buttonType="Register" />
+          <Button route="/" buttonType="Register" />
+          <Button route="/" buttonType="Login" />
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
