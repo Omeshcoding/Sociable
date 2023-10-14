@@ -8,6 +8,7 @@ const usersRouter = require('./models/user');
 const connectToDB = require('./config/db');
 const errorHandler = require('./middleware/errorHaldler');
 const middleware = require('./middleware/auth');
+const cors = require('cors');
 
 // Load configuration
 dotenv.config({ path: './.env' });
@@ -23,9 +24,9 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
 // Routes that server is listening to
 
+app.use(cors());
 app.use(middleware.tokenExtractor);
 app.use('/', mainRoutes);
 app.use('/post', postRoutes);

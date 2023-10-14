@@ -4,7 +4,7 @@ const postController = require('../controller/posts');
 const userController = require('../controller/users');
 const loginRouter = require('../controller/login');
 
-router.get('/', postController.getFeed);
+router.get('/posts', postController.getFeed);
 
 router.get('/users', userController.getUser);
 
