@@ -18,6 +18,10 @@ const Login = () => {
         email,
         password,
       });
+      window.localStorage.setItem(
+        'loggedSociableappUser',
+        JSON.stringify(user)
+      );
       setUser(user);
       setEmail('');
       setPassword('');
@@ -26,8 +30,6 @@ const Login = () => {
       console.log('wrong Credentials');
     }
   };
-
-  console.log(user);
 
   return (
     <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
