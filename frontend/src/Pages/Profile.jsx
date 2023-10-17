@@ -1,9 +1,22 @@
+import { useEffect, useState } from 'react';
 import { CreatePost } from '../Components';
 import Header from '../Components/Header';
 import Post from '../Components/Post';
 import HanumanJi from '../assets/Lord-Hanuman.jpg';
+import userService from '../services/posts';
 
 const Profile = () => {
+  const [userData, setUserData] = useState([]);
+  const [loggedUser, setLoggedUser] = useState(null);
+  useEffect(() => {
+    userService.getUser().then((res) => setUserData(res));
+    const loggedUserJSON = window.localStorage.getItem('loggedSociableappUser');
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setLoggedUser(user);
+    }
+  }, []);
+  const filterPost = userData.find((post) => post.email === loggedUser.email);
   return (
     <article>
       <Header />
@@ -20,7 +33,13 @@ const Profile = () => {
       </div>
       <CreatePost />
       <div>
-        <Post />
+        {filterPost?.posts.map((post) => {
+          return (
+            <div key={post.id}>
+              <Post post={post} />
+            </div>
+          );
+        })}
       </div>
     </article>
   );

@@ -41,7 +41,7 @@ module.exports = {
       image: photoUpload.secure_url,
       cloudinaryId: photoUpload.public_id,
       caption: body.caption,
-      likes: body.likes,
+      likes: body.likes === null ? 0 : body.likes,
       user: user._id,
     });
     const savedPost = await post.save();

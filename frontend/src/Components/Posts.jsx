@@ -1,9 +1,9 @@
 import Post from './Post';
 
-const Posts = () => {
+const Posts = ({ post }) => {
   return (
     <section className="mt-10 mx-auto ">
-      <Post />
+      <Post post={post} />
     </section>
   );
 };

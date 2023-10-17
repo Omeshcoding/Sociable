@@ -4,12 +4,16 @@ import Button from '../Components/Button';
 import Input from '../Components/Input';
 import '../styles/login.css';
 import loginService from '../services/login';
-import { Navigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ErrorNotification } from '../Components/ErrorHandler';
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const [notification, setNotification] = useState({
+    message: '',
+    type: '',
+  });
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,24 +22,42 @@ const Login = () => {
         email,
         password,
       });
+      window.localStorage.setItem(
+        'loggedSociableappUser',
+        JSON.stringify(user)
+      );
       setUser(user);
       setEmail('');
       setPassword('');
       console.log('success');
     } catch (error) {
+      setNotification({
+        message: 'Wrong username or password',
+        type: 'error',
+      });
+      setTimeout(() => {
+        setNotification({ message: '', type: '' });
+      }, 5000);
       console.log('wrong Credentials');
     }
   };
 
-  console.log(user);
-
   return (
     <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
+      <div className="h-10">
+        {notification.type === 'error' && (
+          <ErrorNotification
+            message={notification.message}
+            type={notification.type}
+          />
+        )}
+      </div>
+
       <div className="bg-red-50 h-auto w-[500px] rounded-lg p-6 ">
         <h3 className="text-center mb-6 text-3xl  text-blue-700 font-semibold">
           Welcome To Sociable
         </h3>
-        {user && <Navigate to="/feed" replace={true} />}
+        {/* {user && <Navigate to="/feed" replace={true} />} */}
         <form
           onSubmit={handleLogin}
           className="flex flex-col mx-auto gap-4 w-[60%]"
@@ -47,7 +69,7 @@ const Login = () => {
             value={password}
             setValue={setPassword}
           />
-          <Button buttonType="Login" user={user} />
+          <Button buttonType="Login" />
           <Link to="/register">
             <Button buttonType="Register" />
           </Link>
