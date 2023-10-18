@@ -17,6 +17,7 @@ const Profile = () => {
     }
   }, []);
   const filterPost = userData.find((post) => post.email === loggedUser.email);
+  console.log(loggedUser);
   return (
     <article>
       <Header />
@@ -36,7 +37,7 @@ const Profile = () => {
         {filterPost?.posts.map((post) => {
           return (
             <div key={post.id}>
-              <Post post={post} />
+              <Post post={post} user={loggedUser} />
             </div>
           );
         })}

@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
-const Post = ({ post }) => {
+const Post = ({ post, user }) => {
   const [updateLike, setUpdateLike] = useState(post?.likes);
   const [like, setLike] = useState(false);
+  const [show, setShow] = useState(false);
+
   const handleLikesUpdate = (e) => {
     console.log(e);
     if (!like) {
@@ -12,29 +15,45 @@ const Post = ({ post }) => {
     }
     setLike(!like);
   };
+  console.log(post);
   return (
     <>
-      <div className="  flex  justify-center flex-col items-center py-1 ">
-        <div className="mx-auto  bg-zinc-300/20 rounded-md md:px-14 my-2">
-          <h4 className="mb-4 font-bold">{post?.user?.name}</h4>
-          <div className="rounded-sm mb-1 bg-zinc-200 p-2 ">
-            <p className="">{post.title}</p>
+      <div className="  flex  justify-center flex-col items-center py-1 mb-12">
+        <div className="w-[90%] md:w-[610px] mx-auto md:flex flex-col justify-center items-center  bg-zinc-300/20 rounded-md md:px-14 my-2">
+          <div className="rounded-sm mb-1 bg-zinc-200 p-2 w-full ">
+            <div className="flex justify-between relative">
+              <h4 className="mb-4 font-bold">{user?.name}</h4>
+              {user && (
+                <>
+                  <button onClick={() => setShow(!show)}>
+                    <BsThreeDotsVertical />
+                  </button>
+                  {!show && (
+                    <div className="absolute rounded-md top-10 right-1 flex flex-col gap-4 bg-white px-4 py-3 ">
+                      <a href="">Edit</a>
+                      <a href="">Delete</a>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <p className=" sm:w-60 md:w-full">{post.title}</p>
             <p className="">{post.caption}</p>
           </div>
           <div>
             <img
               src={post?.image}
               alt=""
-              className="bg-cover bg-center bg-slate-300  w-[300px] md:w-[400px] h-[600px] rounded-md"
+              className="bg-cover bg-center bg-slate-300  w-[100%] md:w-[500px] h-[600px] rounded-md"
             />
+          </div>
 
-            <div className="flex justify-around  bg-zinc-200 rounded-md py-4 w-[100%] my-2">
-              <button type="button" onClick={() => handleLikesUpdate()}>
-                {updateLike === null ? '0' : updateLike} like
-              </button>
-              <button type="button">comment</button>
-              <button type="button">share</button>
-            </div>
+          <div className="flex justify-around  bg-zinc-200 rounded-md py-4 w-[100%] my-2  lg:w-[510px]">
+            <button type="button" onClick={() => handleLikesUpdate()}>
+              {updateLike === null ? '0' : updateLike} like
+            </button>
+            <button type="button">comment</button>
+            <button type="button">share</button>
           </div>
         </div>
       </div>

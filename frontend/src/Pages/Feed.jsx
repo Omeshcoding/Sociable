@@ -27,12 +27,12 @@ const Feed = () => {
       <Header />
       <main className="w-full">
         <Sidebar setUser={setUser} />
-        <div className="w-[95%] md:w-full ml-auto">
-          <CreatePost />
+        <div>
+          {/* <CreatePost /> */}
           {posts.map((post) => {
             return (
               <div key={post.id}>
-                <Posts post={post} />
+                <Posts post={post} user={post.user} />
               </div>
             );
           })}
