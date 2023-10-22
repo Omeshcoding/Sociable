@@ -8,6 +8,7 @@ import userService from '../services/posts';
 const Profile = () => {
   const [userData, setUserData] = useState([]);
   const [loggedUser, setLoggedUser] = useState(null);
+
   useEffect(() => {
     userService.getUser().then((res) => setUserData(res));
     const loggedUserJSON = window.localStorage.getItem('loggedSociableappUser');
@@ -17,7 +18,6 @@ const Profile = () => {
     }
   }, []);
   const filterPost = userData.find((post) => post.email === loggedUser.email);
-  console.log(loggedUser);
   return (
     <article>
       <Header />
