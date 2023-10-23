@@ -27,14 +27,14 @@ module.exports = {
   },
   createPost: async (req, res) => {
     const body = req.body;
-    console.log(req.file);
+
     const decodedToken = jwt.verify(req.token, process.env.SECRET);
     if (!decodedToken.id) {
       return res.status(401).json({ error: 'token invalid' });
     }
     const user = await User.findById(decodedToken.id);
 
-    const photoUpload = await cloudinary.uploader.upload(req.file.path);
+    const photoUpload = await cloudinary.uploader.upload(req.file?.path);
 
     const post = new Post({
       title: body.title,

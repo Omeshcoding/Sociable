@@ -11,11 +11,19 @@ const Feed = () => {
   useEffect(() => {
     postService.getAll().then((posts) => setPosts(posts));
   }, []);
+  const handleAddPosts = (newObject) => {
+    console.log(newObject);
+    postService.create(newObject).then((returnedPost) => {
+      setPosts(posts.concat(returnedPost));
+    });
+  };
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedSociableappUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
+      postService.setToken(user.token);
     }
   }, []);
   if (user === null) {
@@ -28,7 +36,7 @@ const Feed = () => {
       <main className="w-full">
         <Sidebar setUser={setUser} />
         <div>
-          {/* <CreatePost /> */}
+          <CreatePost addNewPost={handleAddPosts} />
           {posts.map((post) => {
             return (
               <div key={post.id}>
