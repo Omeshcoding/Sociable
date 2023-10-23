@@ -35,7 +35,7 @@ const Feed = () => {
       <Header />
       <main className="w-full">
         <Sidebar setUser={setUser} />
-        <div>
+        <div className="lg:w-[70%] mx-auto">
           <CreatePost addNewPost={handleAddPosts} />
           {posts.map((post) => {
             return (
