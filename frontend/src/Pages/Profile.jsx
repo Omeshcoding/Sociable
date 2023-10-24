@@ -20,7 +20,7 @@ const Profile = () => {
   const filterPost = userData.find((post) => post.email === loggedUser.email);
   return (
     <article>
-      <Header />
+      <Header name={loggedUser?.name} />
       <div className="relative flex items-center flex-col lg:mb-40 mb-20">
         <div className="shadow-xl bg-black/10 w-full h-56"></div>
         <div className=" absolute bottom-[-4rem] text-center">

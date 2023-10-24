@@ -29,10 +29,9 @@ const Feed = () => {
   if (user === null) {
     return <Login setUser={setUser} />;
   }
-
   return (
     <>
-      <Header />
+      <Header name={user.name} />
       <main className="w-full">
         <Sidebar setUser={setUser} />
         <div className="lg:w-[70%] mx-auto">

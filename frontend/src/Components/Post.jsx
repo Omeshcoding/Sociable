@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import postService from '../services/posts';
 
 const Post = ({ post, user }) => {
-  const [updateLike, setUpdateLike] = useState(post?.likes === null && 0);
+  let [updateLike, setUpdateLike] = useState(post?.likes);
   const [like, setLike] = useState(false);
   const [show, setShow] = useState(false);
 
   const handleLikesUpdate = () => {
-    if (!like) {
-      setUpdateLike(updateLike + 1);
+    if (like) {
+      setUpdateLike(--updateLike);
     } else {
-      setUpdateLike(updateLike - 1);
+      setUpdateLike(++updateLike);
     }
     setLike(!like);
+    const newObject = {
+      title: post.title,
+      caption: post.caption,
+      image: post?.image,
+      likes: updateLike,
+    };
+    postService.update(post.id, newObject);
   };
   return (
     <>
@@ -48,7 +56,7 @@ const Post = ({ post, user }) => {
 
           <div className="flex justify-around  bg-zinc-200/50 rounded-md py-4 w-[100%] my-2  lg:w-[500px]">
             <button type="button" onClick={() => handleLikesUpdate()}>
-              {updateLike === 0 ? ' ' : updateLike} like
+              {updateLike} like
             </button>
             <button type="button">comment</button>
             <button type="button">share</button>
