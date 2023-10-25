@@ -8,16 +8,35 @@ import userService from '../services/posts';
 const Profile = () => {
   const [userData, setUserData] = useState([]);
   const [loggedUser, setLoggedUser] = useState(null);
-
+  const [post, setPost] = useState([]);
   useEffect(() => {
     userService.getUser().then((res) => setUserData(res));
     const loggedUserJSON = window.localStorage.getItem('loggedSociableappUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setLoggedUser(user);
+      userService.setToken(user.token);
     }
   }, []);
-  const filterPost = userData.find((post) => post.email === loggedUser.email);
+  useEffect(() => {
+    const filterPost = userData.find((post) => post.email === loggedUser.email);
+    setPost(filterPost?.posts);
+  }, [userData, loggedUser]);
+
+  const handleAddPosts = (newObject) => {
+    console.log(newObject);
+    userService.create(newObject).then((returnedPost) => {
+      setPost(post.concat(returnedPost));
+    });
+  };
+
+  const removePost = (id) => {
+    const newPost = post.filter((post) => post.id !== id);
+
+    userService.deletePost(id).then(() => {
+      return setPost(newPost);
+    });
+  };
   return (
     <article>
       <Header name={loggedUser?.name} />
@@ -34,15 +53,16 @@ const Profile = () => {
           </h2>
         </div>
       </div>
-      <CreatePost />
+      <CreatePost addNewPost={handleAddPosts} />
       <div>
-        {filterPost?.posts.map((post) => {
-          return (
-            <div key={post.id}>
-              <Post post={post} user={loggedUser} />
-            </div>
-          );
-        })}
+        {post &&
+          post.map((post) => {
+            return (
+              <div key={post?.id}>
+                <Post post={post} user={loggedUser} removePost={removePost} />
+              </div>
+            );
+          })}
       </div>
     </article>
   );

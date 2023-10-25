@@ -4,6 +4,7 @@ const postController = require('../controller/posts');
 const { userExtractor } = require('../middleware/auth');
 const upload = require('../middleware/multer');
 
+// routes
 postRouter.get('/:id', postController.getSinglePost);
 
 postRouter.post(
