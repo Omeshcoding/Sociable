@@ -20,16 +20,18 @@ const Profile = () => {
   const filterPost = userData.find((post) => post.email === loggedUser.email);
   return (
     <article>
-      <Header />
-      <div className="relative flex items-center flex-col my-20">
-        <div className="shadow-xl bg-green-400 w-full h-56"></div>
+      <Header name={loggedUser?.name} />
+      <div className="relative flex items-center flex-col lg:mb-40 mb-20">
+        <div className="shadow-xl bg-black/10 w-full h-56"></div>
         <div className=" absolute bottom-[-4rem] text-center">
           <img
             src={HanumanJi}
             alt=""
             className="w-24 shadow-xl rounded-full h-24"
           />
-          <h2>Name</h2>
+          <h2 className="text-lg text-gray-600 font-semibold">
+            {loggedUser?.name}{' '}
+          </h2>
         </div>
       </div>
       <CreatePost />
