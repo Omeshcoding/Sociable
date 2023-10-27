@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BsFillCameraFill } from 'react-icons/bs';
 
 const CreatePost = ({ addNewPost }) => {
   const [newPost, setNewPost] = useState({
@@ -8,13 +7,16 @@ const CreatePost = ({ addNewPost }) => {
     caption: '',
   });
   const [show, setShow] = useState(false);
-
   const handleAddPost = (e) => {
     e.preventDefault();
     addNewPost(newPost);
+    setNewPost({
+      title: '',
+      file: '',
+      caption: '',
+    });
   };
   const handleNewPost = (post) => {
-    console.log(post);
     setNewPost((prev) => {
       return { ...prev, ...post };
     });
@@ -64,17 +66,14 @@ const CreatePost = ({ addNewPost }) => {
               }
             />
             <div className=" flex flex-col  lg:flex-row justify-between py-2">
-              <label className="text-lg flex items-center gap-4 font-semibold bg-green-300 px-6 py-2 rounded-md transition-all hover:bg-green-400">
-                <BsFillCameraFill /> upload photos
-                <input
-                  type="file"
-                  name="file"
-                  className="text-black text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-4  lg:my-1 absolute hidden"
-                  onChange={({ target }) =>
-                    handleNewPost({ file: target.files })
-                  }
-                />
-              </label>
+              <input
+                type="file"
+                name="file"
+                className="text-black text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-4  lg:my-1 absolute "
+                onChange={({ target }) =>
+                  handleNewPost({ file: target.files[0] })
+                }
+              />
 
               <button
                 type="submit"

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import postService from '../services/posts';
 
-const Post = ({ post, user }) => {
+const Post = ({ post, user, removePost }) => {
   let [updateLike, setUpdateLike] = useState(post?.likes);
   const [like, setLike] = useState(false);
   const [show, setShow] = useState(false);
@@ -22,6 +22,7 @@ const Post = ({ post, user }) => {
     };
     postService.update(post.id, newObject);
   };
+
   return (
     <>
       <div className="  flex  justify-center flex-col items-center py-1 mb-12">
@@ -37,7 +38,12 @@ const Post = ({ post, user }) => {
                   {show && (
                     <div className="absolute rounded-md top-10 right-1 flex flex-col gap-4 bg-white px-4 py-3 ">
                       <a href="">Edit</a>
-                      <a href="">Delete</a>
+                      <button
+                        type="button"
+                        onClick={() => removePost(post.id, post.title)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   )}
                 </>
