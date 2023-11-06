@@ -57,7 +57,7 @@ const Login = ({ setUser }) => {
         <h3 className="text-center mb-6 text-3xl  text-blue-700 font-semibold">
           Welcome To Sociable
         </h3>
-        {/* {user && <Navigate to="/feed" replace={true} />} */}
+
         <form
           onSubmit={handleLogin}
           className="flex flex-col mx-auto gap-4 w-[60%]"

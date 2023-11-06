@@ -12,7 +12,6 @@ const Feed = () => {
     postService.getAll().then((posts) => setPosts(posts));
   }, []);
   const handleAddPosts = (newObject) => {
-    console.log(newObject);
     postService.create(newObject).then((returnedPost) => {
       setPosts(posts.concat(returnedPost));
     });
