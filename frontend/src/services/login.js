@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const baseUrl = 'http://localhost:4002/login';
 
 const login = async (credentials) => {
@@ -7,4 +6,9 @@ const login = async (credentials) => {
 
   return response.data;
 };
-export default { login };
+
+const isTokenExpired = (token) => {
+  const cuurentTimeStamp = Math.floor(Date.now() / 1000);
+  return cuurentTimeStamp >= token.exp;
+};
+export default { login, isTokenExpired };

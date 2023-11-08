@@ -23,7 +23,7 @@ const Register = () => {
       console.log(error);
     }
   };
-  console.log(newUser);
+
   return (
     <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
       <div className="bg-red-50 h-auto w-[500px] rounded-lg p-6 ">
