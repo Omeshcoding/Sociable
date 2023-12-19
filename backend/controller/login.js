@@ -6,7 +6,7 @@ const User = require('../models/user');
 module.exports = {
   login: async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
+
     const user = await User.findOne({ email });
 
     const passwordCorrect =
@@ -23,7 +23,7 @@ module.exports = {
       id: user._id,
     };
     const token = jwt.sign(userForToken, process.env.SECRET, {
-      expiresIn: 60 * 60,
+      expiresIn: '1h',
     });
 
     res.status(200).send({ token, email: user.email, name: user.name });

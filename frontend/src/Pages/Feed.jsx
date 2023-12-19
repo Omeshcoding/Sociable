@@ -28,6 +28,11 @@ const Feed = () => {
   if (user === null) {
     return <Login setUser={setUser} />;
   }
+  const sortPost = posts.sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return dateB - dateA;
+  });
   return (
     <>
       <Header name={user.name} />
@@ -35,7 +40,7 @@ const Feed = () => {
         <Sidebar setUser={setUser} />
         <div className="lg:w-[70%] mx-auto">
           <CreatePost addNewPost={handleAddPosts} />
-          {posts.map((post) => {
+          {sortPost.map((post) => {
             return (
               <div key={post.id}>
                 <Posts post={post} user={post.user} />
