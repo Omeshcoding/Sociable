@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import postService from '../services/posts';
+import { FaHeart, FaCommentAlt } from 'react-icons/fa';
 
 const Post = ({ post, user, removePost }) => {
   let [updateLike, setUpdateLike] = useState(post?.likes);
@@ -25,7 +26,7 @@ const Post = ({ post, user, removePost }) => {
 
   return (
     <>
-      <div className="  flex  justify-center flex-col items-center py-1 mb-12">
+      <div className="  flex  justify-center flex-col items-center py-1 mb-12 bg-slate-100">
         <div className="w-[90%] md:w-[610px] mx-auto md:flex flex-col justify-center items-center    md:px-14 my-2">
           <div className="rounded-md my-2 bg-zinc-200/50 px-5 py-3 w-full shadow-sm">
             <div className="flex justify-between relative rounded-md">
@@ -60,16 +61,34 @@ const Post = ({ post, user, removePost }) => {
             />
           </div>
 
-          <div className="flex justify-around  bg-zinc-200/50 rounded-md py-4 w-[100%] my-2  lg:w-[500px]">
-            <button type="button" onClick={() => handleLikesUpdate()}>
-              {updateLike} like
+          <div className="flex justify-around  bg-zinc-200/50 rounded-md py-4 w-[100%] my-2  lg:w-[500px] text-xl">
+            <button
+              type="button"
+              className="flex items-center gap-2 "
+              onClick={() => handleLikesUpdate()}
+            >
+              <span
+                className={`text-3xl ${
+                  like
+                    ? 'text-orange-500 drop-shadow-xl bg-transparent'
+                    : 'text-slate-400'
+                }`}
+              >
+                <FaHeart />
+              </span>{' '}
+              {updateLike} {updateLike < 10 ? 'like' : 'likes'}
             </button>
-            <button type="button">comment</button>
-            <button type="button">share</button>
+            <button
+              type="button"
+              className="flex items-center justify-center gap-2 "
+            >
+              <span className="text-xl text-slate-400">
+                <FaCommentAlt />
+              </span>
+            </button>
           </div>
         </div>
       </div>
-      <hr className="bg-gray-200 h-1 " />
     </>
   );
 };
