@@ -27,7 +27,7 @@ const CreatePost = ({ addNewPost }) => {
       <button
         onClick={() => setShow(!show)}
         type="button"
-        className="bg-green-300 px-6 py-2 font-semibold rounded-md text-lg mt-10 hover:bg-green-400"
+        className="bg-orange-300 px-6 py-2 font-semibold rounded-md text-lg mt-10 hover:bg-orange-400"
       >
         Create New Post <span className="text-xl font-bold ml-2">+</span>
       </button>
@@ -37,9 +37,9 @@ const CreatePost = ({ addNewPost }) => {
           method="POST"
           encType="multipart/form-data"
           onSubmit={handleAddPost}
-          className=" font-Inter w-[90%] md:w-[60%] border-lightGray border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
+          className=" font-Inter w-[90%] md:w-[100%]  border-lightGray border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
         >
-          <div className="  flex flex-col">
+          <div className="flex flex-col">
             <h3 className="text-lg lg:text-2xl font-semibold">
               <span className=" text-2xl text-green-400">•</span> Create New
               Post
@@ -65,11 +65,11 @@ const CreatePost = ({ addNewPost }) => {
                 handleNewPost({ caption: target.value })
               }
             />
-            <div className=" flex flex-col  lg:flex-row justify-between py-2">
+            <div className=" flex flex-col lg:flex-row justify-center py-2 ">
               <input
                 type="file"
                 name="file"
-                className="text-black text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-4  lg:my-1 absolute "
+                className="text-black text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-b  lg:my-1  "
                 onChange={({ target }) =>
                   handleNewPost({ file: target.files[0] })
                 }
@@ -77,7 +77,7 @@ const CreatePost = ({ addNewPost }) => {
 
               <button
                 type="submit"
-                className="text-white text-[17px] font-normal px-4 py-3 lg:py-0 bg-blue-600 hover:bg-blue-500 rounded-lg border-none ml-auto"
+                className="text-white text-[17px] font-normal px-4 py-3 lg:py-0 mt-6 md:mt-0 bg-blue-600 hover:bg-blue-500 rounded-lg border-none ml-auto"
               >
                 Post your thought
               </button>
