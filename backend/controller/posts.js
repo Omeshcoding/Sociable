@@ -75,4 +75,15 @@ module.exports = {
     });
     res.json(savedPost);
   },
+  updatePost: async (req, res) => {
+    const { title, caption } = req.body;
+    const post = {
+      title: title,
+      caption: caption,
+    };
+    const savedPost = await Post.findByIdAndUpdate(req.params.id, post, {
+      new: true,
+    });
+    res.json(savedPost);
+  },
 };

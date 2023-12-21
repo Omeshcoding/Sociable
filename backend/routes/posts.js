@@ -18,4 +18,6 @@ postRouter.delete('/deletePost/:id', userExtractor, postController.deletePost);
 
 postRouter.put('/likePost/:id', postController.likePost);
 
+postRouter.put('/:id', postController.updatePost);
+
 module.exports = postRouter;

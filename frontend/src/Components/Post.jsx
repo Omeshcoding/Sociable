@@ -7,8 +7,9 @@ import { MdDelete } from 'react-icons/md';
 import { IoClose } from 'react-icons/io5';
 import CreatePostForm from './CreatePostForm';
 
-const Post = ({ post, user, removePost }) => {
-  let [updateLike, setUpdateLike] = useState(post?.likes);
+const Post = ({ posts, user, removePost }) => {
+  let [updateLike, setUpdateLike] = useState(posts?.likes);
+  const [post, setPostUpdate] = useState(posts);
   const [like, setLike] = useState(false);
   const [show, setShow] = useState(false);
   const [showmodal, setShowmodal] = useState(false);
@@ -28,13 +29,20 @@ const Post = ({ post, user, removePost }) => {
     };
     postService.update(post.id, newObject);
   };
+
+  const handleUpdatePost = (e) => {
+    e.preventDefault();
+    postService.updatePost(posts.id, post);
+    setShowmodal(!showmodal);
+  };
+
   return (
     <>
       <div className=" bg-gray-200/70  flex  justify-center flex-col items-center py-1 mb-12 lg:w-[100%]  rounded-md w-[95%] mx-auto">
         <div className="w-[95%] sm:w-[90%] md:w-[610px] mx-auto md:flex flex-col justify-center items-center    md:px-14 my-2">
-          <div className="rounded-md my-2 bg-zinc-200/50 px-5 py-3 w-full shadow-sm">
+          <div className="rounded-md my-1 bg-white px-5 py-3 w-full shadow-sm">
             <div className="flex justify-between relative rounded-md">
-              <h4 className="mb-4 font-bold">{user?.name}</h4>
+              <h4 className="mb-4 font-bold capitalize">{user?.name}</h4>
               {user && (
                 <>
                   <button onClick={() => setShow(!show)}>
@@ -66,22 +74,29 @@ const Post = ({ post, user, removePost }) => {
               )}
 
               {showmodal && (
-                <div className="absolute md:left-[-70px]  w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md">
+                <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md shadow-md">
                   <button
-                    className="text-white absolute  text-4xl right-4 "
+                    className="text-black absolute  text-4xl right-4 "
                     onClick={() => setShowmodal(!showmodal)}
                   >
                     {' '}
                     <IoClose />
                   </button>
                   <div className="mt-12">
-                    <CreatePostForm />
+                    <CreatePostForm
+                      post={posts}
+                      postUpdate={post}
+                      handleUpdatePost={handleUpdatePost}
+                      setPostUpdate={setPostUpdate}
+                    />
                   </div>
                 </div>
               )}
             </div>
-            <p className=" sm:w-60 md:w-full">{post.title}</p>
-            <p className="">{post.caption}</p>
+            <p className="capitalize font-semibold sm:w-full mb-2">
+              {post.title}
+            </p>
+            <p className=" text-md text-gray-600">{post.caption}</p>
           </div>
           <div>
             <img
@@ -91,7 +106,7 @@ const Post = ({ post, user, removePost }) => {
             />
           </div>
 
-          <div className="flex justify-around  bg-zinc-200/50 rounded-md py-4 w-[100%] my-2  lg:w-[500px] text-xl">
+          <div className="flex justify-around  bg-white rounded-md py-4 w-[100%] my-1  lg:w-[500px] text-xl">
             <button
               type="button"
               className="flex items-center gap-2 "

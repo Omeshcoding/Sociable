@@ -49,4 +49,18 @@ const deletePost = async (id) => {
   );
   return request.then((response) => response.data);
 };
-export default { getAll, getUser, create, setToken, update, deletePost };
+
+const updatePost = async (id, newObject) => {
+  const response = await axios.put(`${baseUrl}/post/${id}`, newObject);
+  return response.data;
+};
+
+export default {
+  getAll,
+  getUser,
+  create,
+  setToken,
+  update,
+  deletePost,
+  updatePost,
+};

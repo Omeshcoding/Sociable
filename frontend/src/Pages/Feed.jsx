@@ -8,9 +8,6 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    postService.getAll().then((posts) => setPosts(posts));
-  }, []);
   const handleAddPosts = (newObject) => {
     postService.create(newObject).then((returnedPost) => {
       setPosts(posts.concat(returnedPost));
@@ -24,6 +21,9 @@ const Feed = () => {
       setUser(user);
       postService.setToken(user.token);
     }
+  }, []);
+  useEffect(() => {
+    postService.getAll().then((posts) => setPosts(posts));
   }, []);
   if (user === null) {
     return <Login setUser={setUser} />;
