@@ -63,7 +63,7 @@ const Post = ({ posts, user, removePost }) => {
 
                       <button
                         type="button"
-                        onClick={() => removePost(post.id, post.title)}
+                        onClick={() => removePost(post.id, post?.title)}
                         className="flex text-rose-600 items-center gap-2"
                       >
                         <MdDelete /> Delete

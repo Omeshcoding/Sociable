@@ -23,7 +23,7 @@ const CreatePost = ({ addNewPost }) => {
   };
 
   return (
-    <section className="mt-8 flex flex-col items-center justify-center gap-10 ">
+    <section className="my-8 flex flex-col items-center justify-center gap-10 ">
       <button
         onClick={() => setShow(!show)}
         type="button"

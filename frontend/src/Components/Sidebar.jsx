@@ -9,7 +9,7 @@ const Sidebar = ({ setUser }) => {
   };
 
   return (
-    <nav className="flex flex-col lg:h-[100%] w-[100%] lg:w-[20%] px-3 md:px-10 capitalize justify-center fixed bottom-0 lg:top-0 shadow-xl py-4 gap-10 md:gap-16 lg:gap-20 z-10 text-xl bg-orange-200">
+    <nav className="flex flex-col lg:h-[100%] w-[100%] lg:w-[20%] px-3 md:px-10 capitalize justify-center fixed bottom-0 lg:top-0 shadow-xl py-4 gap-10 md:gap-16 lg:gap-20 z-10 text-md md:text-xl bg-orange-200">
       <div className="flex sticky buttom-0 lg:flex-col gap-10 sm:gap-28  mx-auto">
         <Link to="/" className="flex align-center">
           <span className="mr-2 my-auto">
