@@ -37,8 +37,8 @@ module.exports = {
 
     const post = new Post({
       title: body.title,
-      image: photoUpload.secure_url,
-      cloudinaryId: photoUpload.public_id,
+      image: photoUpload.secure_url || null,
+      cloudinaryId: photoUpload.public_id || null,
       caption: body.caption,
       likes: body.likes === null ? 0 : body.likes,
       user: user._id,
@@ -69,6 +69,17 @@ module.exports = {
       author: author,
       url: url,
       likes: likes,
+    };
+    const savedPost = await Post.findByIdAndUpdate(req.params.id, post, {
+      new: true,
+    });
+    res.json(savedPost);
+  },
+  updatePost: async (req, res) => {
+    const { title, caption } = req.body;
+    const post = {
+      title: title,
+      caption: caption,
     };
     const savedPost = await Post.findByIdAndUpdate(req.params.id, post, {
       new: true,

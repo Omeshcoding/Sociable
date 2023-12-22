@@ -38,35 +38,38 @@ const Profile = () => {
     });
   };
   return (
-    <article>
-      <Sidebar />
+    <>
       <Header name={loggedUser?.name} />
-      <div className="relative flex items-center flex-col lg:mb-40 mb-20">
-        <div className="shadow-xl bg-black/10 w-full h-56 z-0"></div>
-        <div className=" absolute bottom-[-4rem] text-center">
-          <img
-            src={HanumanJi}
-            alt=""
-            className="w-24 shadow-xl rounded-full h-24"
-          />
-          <h2 className="text-lg text-gray-600 font-semibold">
-            {loggedUser?.name}{' '}
-          </h2>
+      <div className="flex flex-col">
+        <Sidebar />
+
+        <div className=" flex flex-col items-center lg:w-[80%] ml-auto ">
+          <div className="ml-0 flex justify-between items-center">
+            <img
+              src={HanumanJi}
+              alt=""
+              className="w-[100px] shadow-xl rounded-full h-[100px]"
+            />
+            <p className="text-center ml-4">{loggedUser?.name}</p>
+          </div>
+          <div className="mx-auto">
+            <CreatePost addNewPost={handleAddPosts} />
+            {post &&
+              post.map((post) => {
+                return (
+                  <div key={post?.id}>
+                    <Post
+                      posts={post}
+                      user={loggedUser}
+                      removePost={removePost}
+                    />
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
-      <div className="lg:w-[70%] mx-auto">
-        <CreatePost addNewPost={handleAddPosts} />
-
-        {post &&
-          post.map((post) => {
-            return (
-              <div key={post?.id}>
-                <Post post={post} user={loggedUser} removePost={removePost} />
-              </div>
-            );
-          })}
-      </div>
-    </article>
+    </>
   );
 };
 

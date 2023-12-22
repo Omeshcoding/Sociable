@@ -8,9 +8,6 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    postService.getAll().then((posts) => setPosts(posts));
-  }, []);
   const handleAddPosts = (newObject) => {
     postService.create(newObject).then((returnedPost) => {
       setPosts(posts.concat(returnedPost));
@@ -25,6 +22,9 @@ const Feed = () => {
       postService.setToken(user.token);
     }
   }, []);
+  useEffect(() => {
+    postService.getAll().then((posts) => setPosts(posts));
+  }, []);
   if (user === null) {
     return <Login setUser={setUser} />;
   }
@@ -36,17 +36,19 @@ const Feed = () => {
   return (
     <>
       <Header name={user.name} />
-      <main className="w-full">
+      <main className="flex flex-col">
         <Sidebar setUser={setUser} />
-        <div className="lg:w-[70%] mx-auto">
-          <CreatePost addNewPost={handleAddPosts} />
-          {sortPost.map((post) => {
-            return (
-              <div key={post.id}>
-                <Posts post={post} user={post.user} />
-              </div>
-            );
-          })}
+        <div className=" flex flex-col items-center lg:w-[80%] ml-auto ">
+          <div className="mx-auto">
+            <CreatePost addNewPost={handleAddPosts} />
+            {sortPost.map((post) => {
+              return (
+                <div key={post.id}>
+                  <Posts post={post} user={post.user} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </main>
     </>

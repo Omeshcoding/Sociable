@@ -1,10 +1,7 @@
-const Button = ({ buttonType }) => {
+const Button = ({ btnName, btnStyle, type }) => {
   return (
-    <button
-      type="submit"
-      className={`${' bg-blue-500 text-white'} w-full text-center py-1 px-6 rounded-xl text-white`}
-    >
-      {buttonType}
+    <button type={type} className={btnStyle}>
+      {btnName}
     </button>
   );
 };
