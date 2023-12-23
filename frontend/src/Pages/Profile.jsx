@@ -42,7 +42,6 @@ const Profile = () => {
       <Header name={loggedUser?.name} />
       <div className="flex flex-col">
         <Sidebar />
-
         <div className=" flex flex-col items-center lg:w-[80%] ml-auto ">
           <div className="ml-0 flex justify-between items-center">
             <img

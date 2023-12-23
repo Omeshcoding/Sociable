@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const mainRoutes = require('./routes/main');
 const postRoutes = require('./routes/posts');
-const usersRouter = require('./models/user');
+const commentRouter = require('./routes/comment');
 const connectToDB = require('./config/db');
 const errorHandler = require('./middleware/errorHaldler');
 const middleware = require('./middleware/auth');
@@ -30,7 +30,8 @@ app.use(cors());
 app.use(middleware.tokenExtractor);
 app.use('/', mainRoutes);
 app.use('/post', postRoutes);
-app.use('/users', usersRouter);
+app.use('/comment', commentRouter);
+
 app.use(errorHandler);
 const PORT = process.env.PORT || 4000;
 
