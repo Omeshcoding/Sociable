@@ -38,7 +38,7 @@ const Feed = () => {
       <Header name={user.name} />
       <main className="flex flex-col">
         <Sidebar setUser={setUser} />
-        <div className=" flex flex-col items-center lg:w-[80%] ml-auto ">
+        <div className=" flex flex-col items-center w-[100%] lg:w-[80%] ml-auto ">
           <div className="mx-auto">
             <CreatePost addNewPost={handleAddPosts} />
             {sortPost.map((post) => {
