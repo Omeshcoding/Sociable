@@ -43,9 +43,17 @@ const Register = () => {
             password={password}
             setValue={setPassword}
           />
-          <Button buttonType="Register" />
+          <Button
+            type="submit"
+            btnName="Register"
+            btnStyle=" bg-blue-500 text-white w-full text-center py-1 px-6 rounded-xl text-white"
+          />
           <Link to="/">
-            <Button buttonType="Login" />
+            <Button
+              type="submit"
+              btnName="Login"
+              btnStyle=" bg-blue-500 text-white w-full text-center py-1 px-6 rounded-xl text-white"
+            />
           </Link>
         </form>
       </div>

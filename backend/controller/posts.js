@@ -7,10 +7,15 @@ const cloudinary = require('../middleware/cloudinary');
 module.exports = {
   getFeed: async (req, res) => {
     try {
-      const posts = await Post.find({}).populate('user', {
-        email: 1,
-        name: 1,
-      });
+      const posts = await Post.find({})
+        .populate('comments', {
+          text: 1,
+          user: 1,
+        })
+        .populate('user', {
+          email: 1,
+          name: 1,
+        });
       res.json(posts);
     } catch (error) {
       console.log(error);
@@ -32,6 +37,7 @@ module.exports = {
       return res.status(401).json({ error: 'token invalid' });
     }
     const user = await User.findById(decodedToken.id);
+    const comment = await Comment.findById(decodedToken.id);
 
     const photoUpload = await cloudinary.uploader.upload(req.file?.path);
 
@@ -40,7 +46,7 @@ module.exports = {
       image: photoUpload.secure_url || null,
       cloudinaryId: photoUpload.public_id || null,
       caption: body.caption,
-      likes: body.likes === null ? 0 : body.likes,
+      likes: body.likes <= 0 ? 0 : body.likes,
       user: user._id,
     });
     const savedPost = await post.save();
