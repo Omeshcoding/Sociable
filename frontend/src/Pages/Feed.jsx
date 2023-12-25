@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Sidebar, CreatePost } from '../Components';
-import Header from '../Components/Header';
+import { CreatePost } from '../Components';
 import Posts from '../Components/Posts';
 import postService from '../services/posts';
 import Login from './Login';
-const Feed = () => {
+const Feed = ({ user, setUser }) => {
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState(null);
 
   const handleAddPosts = (newObject) => {
     postService.create(newObject).then((returnedPost) => {
@@ -15,13 +13,8 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedSociableappUser');
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      postService.setToken(user.token);
-    }
-  }, []);
+    postService.setToken(user?.token);
+  }, [user]);
   useEffect(() => {
     postService.getAll().then((posts) => setPosts(posts));
   }, []);
@@ -35,9 +28,7 @@ const Feed = () => {
   });
   return (
     <>
-      <Header name={user.name} />
       <main className="flex flex-col">
-        <Sidebar setUser={setUser} />
         <div className=" flex flex-col items-center w-[100%] lg:w-[80%] ml-auto ">
           <div className="mx-auto">
             <CreatePost addNewPost={handleAddPosts} />

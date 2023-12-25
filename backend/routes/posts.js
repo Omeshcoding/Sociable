@@ -5,7 +5,7 @@ const { userExtractor } = require('../middleware/auth');
 const upload = require('../middleware/multer');
 
 // routes
-postRouter.get('/:id', postController.getSinglePost);
+postRouter.get('/:id', userExtractor, postController.getSinglePost);
 
 postRouter.post(
   '/createPost',

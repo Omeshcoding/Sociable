@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CreatePost, Sidebar } from '../Components';
-import Header from '../Components/Header';
+import { CreatePost } from '../Components';
 import Post from '../Components/Post';
 import HanumanJi from '../assets/Lord-Hanuman.jpg';
 import userService from '../services/posts';
@@ -19,7 +18,9 @@ const Profile = () => {
     }
   }, []);
   useEffect(() => {
-    const filterPost = userData.find((post) => post.email === loggedUser.email);
+    const filterPost = userData.find(
+      (post) => post.email === loggedUser?.email
+    );
     setPost(filterPost?.posts);
   }, [userData, loggedUser]);
 
@@ -39,9 +40,7 @@ const Profile = () => {
   };
   return (
     <>
-      <Header name={loggedUser?.name} />
       <div className="flex flex-col">
-        <Sidebar />
         <div className=" flex flex-col items-center lg:w-[80%] ml-auto ">
           <div className="ml-0 flex justify-between items-center">
             <img
