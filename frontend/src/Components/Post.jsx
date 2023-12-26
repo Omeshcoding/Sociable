@@ -35,10 +35,9 @@ const Post = ({ posts, user, removePost }) => {
     postService.updatePost(posts.id, post);
     setShowmodal(!showmodal);
   };
-
   return (
     <>
-      <div className=" bg-gray-200/70  flex  justify-center flex-col items-center md:py-6 mb-12 lg:w-[100%]  rounded-md w-[95%] mx-auto">
+      <div className=" bg-gray-200/70  flex  justify-center flex-col items-center sm:py-6 mb-12 lg:w-[100%]  rounded-md w-[95%] mx-auto">
         <div className="w-[95%] sm:w-[90%] md:w-[610px] mx-auto md:flex flex-col justify-center items-center    md:px-14 my-2">
           <div className="rounded-md my-1 bg-white px-5 py-3 w-full shadow-sm">
             <div className="flex justify-between relative rounded-md">
