@@ -11,13 +11,10 @@ const Feed = ({ user, setUser }) => {
       setPosts(posts.concat(returnedPost));
     });
   };
-
-  useEffect(() => {
-    postService.setToken(user?.token);
-  }, [user]);
   useEffect(() => {
     postService.getAll().then((posts) => setPosts(posts));
-  }, []);
+    postService.setToken(user?.token);
+  }, [user]);
   if (user === null) {
     return <Login setUser={setUser} />;
   }

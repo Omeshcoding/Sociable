@@ -26,6 +26,8 @@ module.exports = {
       expiresIn: '1h',
     });
 
-    res.status(200).send({ token, email: user.email, name: user.name });
+    res
+      .status(200)
+      .send({ token, email: user.email, name: user.name, id: user._id });
   },
 };

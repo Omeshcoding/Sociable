@@ -4,33 +4,24 @@ import Post from '../Components/Post';
 import HanumanJi from '../assets/Lord-Hanuman.jpg';
 import userService from '../services/posts';
 
-const Profile = () => {
-  const [userData, setUserData] = useState([]);
-  const [loggedUser, setLoggedUser] = useState(null);
+const Profile = ({ user }) => {
   const [post, setPost] = useState([]);
+
   useEffect(() => {
-    userService.getUser().then((res) => setUserData(res));
-    const loggedUserJSON = window.localStorage.getItem('loggedSociableappUser');
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setLoggedUser(user);
-      userService.setToken(user.token);
-    }
-  }, []);
-  useEffect(() => {
-    const filterPost = userData.find(
-      (post) => post.email === loggedUser?.email
-    );
-    setPost(filterPost?.posts);
-  }, [userData, loggedUser]);
+    userService
+      .getAll()
+      .then((posts) =>
+        setPost(() => posts.filter((p) => p?.user?.id === user?.id))
+      );
+
+    userService.setToken(user?.token);
+  }, [user]);
 
   const handleAddPosts = (newObject) => {
-    console.log(newObject);
     userService.create(newObject).then((returnedPost) => {
       setPost(post.concat(returnedPost));
     });
   };
-
   const removePost = (id) => {
     const newPost = post.filter((post) => post.id !== id);
 
@@ -41,14 +32,14 @@ const Profile = () => {
   return (
     <>
       <div className="flex flex-col">
-        <div className=" flex flex-col items-center lg:w-[80%] ml-auto ">
+        <div className=" flex flex-col items-center lg:w-[80%] lg:ml-auto ">
           <div className="ml-0 flex justify-between items-center">
             <img
               src={HanumanJi}
               alt=""
               className="w-[100px] shadow-xl rounded-full h-[100px]"
             />
-            <p className="text-center ml-4">{loggedUser?.name}</p>
+            <p className="text-center ml-4">{user?.name}</p>
           </div>
           <div className="mx-auto">
             <CreatePost addNewPost={handleAddPosts} />
@@ -56,11 +47,7 @@ const Profile = () => {
               post.map((post) => {
                 return (
                   <div key={post?.id}>
-                    <Post
-                      posts={post}
-                      user={loggedUser}
-                      removePost={removePost}
-                    />
+                    <Post posts={post} user={user} removePost={removePost} />
                   </div>
                 );
               })}
