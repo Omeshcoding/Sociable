@@ -156,7 +156,7 @@ const Post = ({ posts, user, removePost }) => {
                 className="w-full border-2 border-rose-200 resize-none outline-none px-3 py-3 rounded-xl overflow-hidden bg-gray-100"
                 type="text"
               />
-              <button className="bg-amber-300 py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm ">
+              <button className="bg-secondary-3 hover:bg-background-1 duration-300 transition-all py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm ">
                 Post
               </button>
             </form>

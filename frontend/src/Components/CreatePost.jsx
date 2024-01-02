@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 
 const CreatePost = ({ addNewPost }) => {
   const [newPost, setNewPost] = useState({
@@ -27,9 +28,10 @@ const CreatePost = ({ addNewPost }) => {
       <button
         onClick={() => setShow(!show)}
         type="button"
-        className="bg-orange-300 px-6 py-2 font-semibold rounded-md text-lg mt-10 hover:bg-orange-400"
+        className="flex items-center justify-center gap-3 bg-secondary-3 px-6 py-2 font-semibold rounded-md text-lg mt-10 text-background-3 hover:bg-background-1 transition-all duration-300"
       >
-        Create New Post <span className="text-xl font-bold ml-2">+</span>
+        <span className="text-xl ml-2">Create New Post </span>
+        {!show ? <FaPlus /> : <FaMinus />}
       </button>
       {show && (
         <form
@@ -37,14 +39,16 @@ const CreatePost = ({ addNewPost }) => {
           method="POST"
           encType="multipart/form-data"
           onSubmit={handleAddPost}
-          className=" font-Inter w-[90%] md:w-[100%]  border-lightGray border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
+          className=" font-Inter w-[90%] md:w-[100%]  border-lightGray 
+          bg-background-3
+          border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
         >
           <div className="flex flex-col">
-            <h3 className="text-lg lg:text-2xl font-semibold">
-              <span className=" text-2xl text-green-400">•</span> Create New
+            <h3 className="text-xl md:text-2xl font-semibold text-secondary-3">
+              <span className=" text-2xl text-background-1">•</span> Create New
               Post
             </h3>
-            <hr className="bg-orange-200 h-1" />
+            <hr className="bg-background-1 h-1" />
             <textarea
               name="post"
               cols="10"
@@ -69,7 +73,7 @@ const CreatePost = ({ addNewPost }) => {
               <input
                 type="file"
                 name="file"
-                className="text-black text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-b  lg:my-1  "
+                className="text-background-1 text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-b  lg:my-1  "
                 onChange={({ target }) =>
                   handleNewPost({ file: target.files[0] })
                 }
@@ -77,7 +81,7 @@ const CreatePost = ({ addNewPost }) => {
 
               <button
                 type="submit"
-                className="text-white text-[17px] font-normal px-4 py-3 lg:py-0 mt-6 md:mt-0 bg-blue-600 hover:bg-blue-500 rounded-lg border-none ml-auto"
+                className="text-background-3 font-semibold text-[17px]  first-letter: px-4 py-3 lg:py-0 mt-6 md:mt-0 bg-secondary-3 hover:bg-background-1 rounded-lg border-none ml-auto"
               >
                 Post your thought
               </button>

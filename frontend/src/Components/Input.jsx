@@ -1,11 +1,11 @@
 const Input = ({ type, label, value, setValue }) => {
   return (
     <div className="flex flex-col ">
-      <label className="font-semibold">{label}:</label>
+      <label className="font-semibold text-background-4">{label}:</label>
       <input
         type={type}
         value={value}
-        className="input-field"
+        className="input-field  p-2 rounded-md text-secondary-2"
         onChange={({ target }) => setValue(target.value)}
       />
     </div>
