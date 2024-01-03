@@ -15,13 +15,16 @@ module.exports = {
     const postId = req.params.id;
     try {
       const post = await Post.findById(postId);
+      const user = await User.findById(body.user);
+      console.log(user);
       if (!post) {
         return res.status(404).json({ error: 'Post not found' });
       }
 
       const comment = new Comment({
         text: body.comment,
-        user: body.user,
+        user: user.name,
+        userId: body.user,
         post: postId,
       });
 

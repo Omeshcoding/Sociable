@@ -42,6 +42,7 @@ const Post = ({ posts, user, removePost }) => {
     textAreaRef.current.style.height = 'auto';
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
   }, [comment]);
+  console.log(post);
   return (
     <>
       <div className=" bg-gray-200/70  flex  justify-center flex-col items-center sm:py-6 mb-12 lg:w-[100%]  rounded-md w-[95%] mx-auto">
@@ -140,8 +141,8 @@ const Post = ({ posts, user, removePost }) => {
           </div>
           <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
             {post?.comments.length !== undefined &&
-              post?.comments.map((item) => (
-                <div key={item.id} className="mb-3 ">
+              post.comments.map((item) => (
+                <div key={item._id} className="mb-3 ">
                   <p className="font-bold capitalize mb-1">{user.name}</p>
                   <p>{item.text}</p>
                   <hr className="text-gray-600 mt-2" />
@@ -156,7 +157,7 @@ const Post = ({ posts, user, removePost }) => {
                 className="w-full border-2 border-rose-200 resize-none outline-none px-3 py-3 rounded-xl overflow-hidden bg-gray-100"
                 type="text"
               />
-              <button className="bg-secondary-3 hover:bg-background-1 duration-300 transition-all py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm ">
+              <button className="bg-secondary-3 hover:bg-background-1 duration-300 transition-all py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm font-semibold">
                 Post
               </button>
             </form>
