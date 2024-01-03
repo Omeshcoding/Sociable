@@ -5,7 +5,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        red: '#eee',
+        primary: '#9381ff',
+        'secondary-1': '#b8b8ff',
+        'secondary-2': '#f8f7ff',
+        'secondary-3': '#fb8500',
+        'background-1': '#ffb703',
+        'background-2': '#219ebc',
+        'background-3': '#023047',
+        'background-4': '#8ecae6',
       },
     },
   },

@@ -28,7 +28,6 @@ module.exports = {
       const savedComment = await comment.save();
       console.log(savedComment.id, post.comments);
       post.comments = post.comments.concat(savedComment._id);
-      console.log(post, req.body.comment, req.params);
       await post.save();
       res.status(201).json(comment);
     } catch (error) {

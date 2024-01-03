@@ -22,7 +22,6 @@ module.exports = {
     }
   },
   getSinglePost: async (req, res) => {
-    console.log(req.isAuthenticated);
     try {
       const post = await Post.findById(req.params.id);
       res.json(post);
@@ -37,7 +36,6 @@ module.exports = {
       return res.status(401).json({ error: 'token invalid' });
     }
     const user = await User.findById(decodedToken.id);
-    const comment = await Comment.findById(decodedToken.id);
 
     const photoUpload = await cloudinary.uploader.upload(req.file?.path);
 

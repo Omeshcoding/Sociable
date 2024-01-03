@@ -29,7 +29,6 @@ const Login = ({ setUser }) => {
       setUser(user);
       setEmail('');
       setPassword('');
-      console.log('success');
     } catch (error) {
       setNotification({
         message: 'Wrong username or password',
@@ -53,8 +52,8 @@ const Login = ({ setUser }) => {
         )}
       </div>
 
-      <div className="bg-red-50 h-auto w-[500px] rounded-lg p-6 ">
-        <h3 className="text-center mb-6 text-3xl  text-blue-700 font-semibold">
+      <div className="bg-background-3 h-auto w-[500px] rounded-lg p-6 ">
+        <h3 className="text-center mb-6 text-3xl  text-secondary-3 font-semibold">
           Welcome To Sociable
         </h3>
 
@@ -72,13 +71,13 @@ const Login = ({ setUser }) => {
           <Button
             btnName="Login"
             type="submit"
-            btnStyle=" bg-blue-500 text-white w-full text-center py-1 px-6 rounded-xl text-white"
+            btnStyle="bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />
           <Link to="/register">
             <Button
               type="submit"
               btnName="Register"
-              btnStyle=" bg-blue-500 text-white w-full text-center py-1 px-6 rounded-xl text-white"
+              btnStyle=" bg-background-1 text-background-3 font-semibold w-full text-center py-2 px-6 rounded-xl "
             />
           </Link>
         </form>
