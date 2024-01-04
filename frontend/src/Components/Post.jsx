@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import postService from '../services/posts';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
@@ -6,15 +6,16 @@ import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import { IoClose } from 'react-icons/io5';
 import CreatePostForm from './CreatePostForm';
+import CreateCommentForm from './CreateCommentForm';
+import Comment from './Comment';
 
 const Post = ({ posts, user, removePost }) => {
   let [updateLike, setUpdateLike] = useState(posts?.likes);
   const [post, setPostUpdate] = useState(posts);
-  const [comment, setComment] = useState('');
+
   const [like, setLike] = useState(false);
   const [show, setShow] = useState(false);
   const [showmodal, setShowmodal] = useState(false);
-  const textAreaRef = useRef(null);
 
   const handleLikesUpdate = () => {
     if (like) {
@@ -38,11 +39,6 @@ const Post = ({ posts, user, removePost }) => {
     setShowmodal(!showmodal);
   };
 
-  useEffect(() => {
-    textAreaRef.current.style.height = 'auto';
-    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
-  }, [comment]);
-  console.log(post);
   return (
     <>
       <div className=" bg-gray-200/70  flex  justify-center flex-col items-center sm:py-6 mb-12 lg:w-[100%]  rounded-md w-[95%] mx-auto">
@@ -143,24 +139,10 @@ const Post = ({ posts, user, removePost }) => {
             {post?.comments.length !== undefined &&
               post.comments.map((item) => (
                 <div key={item._id} className="mb-3 ">
-                  <p className="font-bold capitalize mb-1">{user.name}</p>
-                  <p>{item.text}</p>
-                  <hr className="text-gray-600 mt-2" />
+                  <Comment username={item.username} content={item.text} />
                 </div>
               ))}
-            <form className="flex flex-col gap-2  rounded-xl">
-              <textarea
-                value={comment}
-                onChange={({ target }) => setComment(target.value)}
-                ref={textAreaRef}
-                rows="1"
-                className="w-full border-2 border-rose-200 resize-none outline-none px-3 py-3 rounded-xl overflow-hidden bg-gray-100"
-                type="text"
-              />
-              <button className="bg-secondary-3 hover:bg-background-1 duration-300 transition-all py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm font-semibold">
-                Post
-              </button>
-            </form>
+            <CreateCommentForm post={post} />
           </div>
         </div>
       </div>

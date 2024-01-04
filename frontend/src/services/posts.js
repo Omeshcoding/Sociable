@@ -54,7 +54,15 @@ const updatePost = async (id, newObject) => {
   const response = await axios.put(`${baseUrl}/post/${id}`, newObject);
   return response.data;
 };
-
+const createComment = async (id, newComment) => {
+  console.log(id, newComment);
+  const response = await axios.post(`${baseUrl}/comment/${id}`, newComment);
+  return response.data;
+};
+const getComments = async () => {
+  const response = await axios.get(`${baseUrl}/comment`);
+  return response.data;
+};
 export default {
   getAll,
   getUser,
@@ -63,4 +71,6 @@ export default {
   update,
   deletePost,
   updatePost,
+  createComment,
+  getComments,
 };

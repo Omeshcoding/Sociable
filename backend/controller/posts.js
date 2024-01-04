@@ -12,6 +12,8 @@ module.exports = {
           text: 1,
           user: 1,
           createdAt: 1,
+          username: 1,
+          post: 1,
         })
         .populate('user', {
           email: 1,
