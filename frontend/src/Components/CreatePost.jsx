@@ -28,7 +28,7 @@ const CreatePost = ({ addNewPost }) => {
       <button
         onClick={() => setShow(!show)}
         type="button"
-        className="flex items-center justify-center gap-3 bg-secondary-3 px-6 py-2 font-semibold rounded-md text-lg mt-10 text-background-3 hover:bg-background-1 transition-all duration-300"
+        className="flex items-center justify-center gap-3 bg-secondary-3 px-6 py-2 font-semibold rounded-md text-lg mt-10 text-background-3 hover:bg-background-1 transition-all duration-300 "
       >
         <span className="text-xl ml-2">Create New Post </span>
         {!show ? <FaPlus /> : <FaMinus />}
@@ -44,7 +44,7 @@ const CreatePost = ({ addNewPost }) => {
           border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
         >
           <div className="flex flex-col">
-            <h3 className="text-xl md:text-2xl font-semibold text-secondary-3">
+            <h3 className="text-xl md:text-2xl font-semibold text-secondary-3 ">
               <span className=" text-2xl text-background-1">•</span> Create New
               Post
             </h3>
