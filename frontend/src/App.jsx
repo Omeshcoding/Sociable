@@ -31,8 +31,8 @@ function App() {
             element={<Feed user={user} setUser={setUser} />}
           ></Route>
           <Route path="/profile" element={<Profile user={user} />}></Route>
+          <Route path="/register" element={<Register />}></Route>
         </Route>
-        <Route path="/register" element={<Register />}></Route>
       </Routes>
     </BrowserRouter>
   );
