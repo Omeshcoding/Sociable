@@ -39,6 +39,7 @@ const Post = ({ posts, user, removePost }) => {
     postService.updatePost(posts.id, post);
     setShowmodal(!showmodal);
   };
+
   return (
     <>
       {posts && (
@@ -174,7 +175,7 @@ const Post = ({ posts, user, removePost }) => {
                     <Comment username={item.username} content={item.text} />
                   </div>
                 ))}
-              <CreateCommentForm post={post} />
+              <CreateCommentForm post={post} id={user?.id} />
             </div>
           </div>
         </div>
