@@ -3,19 +3,19 @@ import { CreatePost } from '../Components';
 import Post from '../Components/Post';
 import HanumanJi from '../assets/Lord-Hanuman.jpg';
 import userService from '../services/posts';
+import { useParams } from 'react-router-dom';
 
 const Profile = ({ user }) => {
   const [post, setPost] = useState([]);
-
+  const id = useParams().id;
   useEffect(() => {
     userService
       .getAll()
       .then((posts) =>
-        setPost(() => posts.filter((p) => p?.user?.id === user?.id))
+        setPost(() => posts?.filter((post) => post?.user?.id === id))
       );
-
     userService.setToken(user?.token);
-  }, [user]);
+  }, [id, user]);
 
   const handleAddPosts = (newObject) => {
     userService.create(newObject).then((returnedPost) => {

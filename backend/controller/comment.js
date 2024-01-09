@@ -26,7 +26,6 @@ module.exports = {
     try {
       const post = await Post.findById(postId);
       const user = await User.findById(body.user);
-      console.log(user);
       if (!post) {
         return res.status(404).json({ error: 'Post not found' });
       }

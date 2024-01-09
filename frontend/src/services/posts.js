@@ -63,6 +63,10 @@ const getComments = async () => {
   const response = await axios.get(`${baseUrl}/comment`);
   return response.data;
 };
+const getSinglePost = async (id) => {
+  const response = await axios.get(`${baseUrl}/post/${id}`);
+  return response.data;
+};
 export default {
   getAll,
   getUser,
@@ -73,4 +77,5 @@ export default {
   updatePost,
   createComment,
   getComments,
+  getSinglePost,
 };

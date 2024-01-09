@@ -26,8 +26,8 @@ const Register = () => {
 
   return (
     <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
-      <div className="bg-red-50 h-auto w-[500px] rounded-lg p-6 ">
-        <h3 className="text-center mb-6 text-3xl  text-blue-700 font-semibold">
+      <div className="bg-background-3 h-auto w-[500px] rounded-lg p-6 ">
+        <h3 className="text-center mb-6 text-3xl  text-secondary-3 font-semibold">
           Welcome To Sociable
         </h3>
         <form
@@ -36,7 +36,13 @@ const Register = () => {
         >
           {newUser && <Navigate to="/feed" replace={true} />}
           <Input type="email" label="Email" email={email} setValue={setEmail} />
-          <Input type="name" label="Name" name={name} setValue={setName} />
+          <Input
+            type="name"
+            placeholder="John dew"
+            label="Name"
+            name={name}
+            setValue={setName}
+          />
           <Input
             type="password"
             label="Password"
@@ -46,13 +52,13 @@ const Register = () => {
           <Button
             type="submit"
             btnName="Register"
-            btnStyle=" bg-blue-500 text-white w-full text-center py-1 px-6 rounded-xl text-white"
+            btnStyle=" bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />
-          <Link to="/">
+          <Link to="/feed">
             <Button
               type="submit"
               btnName="Login"
-              btnStyle=" bg-blue-500 text-white w-full text-center py-1 px-6 rounded-xl text-white"
+              btnStyle=" bg-background-1 text-background-3 font-semibold w-full text-center py-2 px-6 rounded-xl "
             />
           </Link>
         </form>
