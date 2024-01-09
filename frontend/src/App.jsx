@@ -25,12 +25,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SharedLayout user={user} />}>
+        <Route
+          path="/"
+          element={<SharedLayout user={user} setUser={setUser} />}
+        >
           <Route
             path="/feed"
             element={<Feed user={user} setUser={setUser} />}
           ></Route>
-          <Route path="/profile" element={<Profile user={user} />}></Route>
+          <Route path="/profile/:id" element={<Profile user={user} />}></Route>
           <Route path="/register" element={<Register />}></Route>
         </Route>
       </Routes>
