@@ -26,7 +26,13 @@ module.exports = {
   },
   getSinglePost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id);
+      const post = await Post.findById(req.params.id).populate('comments', {
+        text: 1,
+        user: 1,
+        createdAt: 1,
+        username: 1,
+        post: 1,
+      });
       res.json(post);
     } catch (error) {
       console.log(error);

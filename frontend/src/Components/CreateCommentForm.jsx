@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import postService from '../services/posts';
 
-const CreateCommentForm = ({ post }) => {
+const CreateCommentForm = ({ post, id }) => {
   const [comment, setComment] = useState('');
 
   const textAreaRef = useRef(null);
@@ -10,7 +10,7 @@ const CreateCommentForm = ({ post }) => {
     e.preventDefault();
     const newComment = {
       comment: comment,
-      user: post?.user.id,
+      user: id,
     };
 
     try {

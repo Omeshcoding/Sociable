@@ -32,7 +32,7 @@ const Feed = ({ user, setUser }) => {
             {sortPost.map((post) => {
               return (
                 <div key={post.id}>
-                  <Posts post={post} user={post.user} />
+                  <Posts post={post} user={user} />
                 </div>
               );
             })}
