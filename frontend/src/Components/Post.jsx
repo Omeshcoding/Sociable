@@ -16,7 +16,11 @@ const Post = ({ posts, user, removePost }) => {
 
   const [like, setLike] = useState(false);
   const [show, setShow] = useState(false);
-  const [showmodal, setShowmodal] = useState({ edit: false, delete: false });
+  const [showmodal, setShowmodal] = useState({
+    edit: false,
+    delete: false,
+    comment: false,
+  });
 
   const handleLikesUpdate = () => {
     if (like) {
@@ -162,6 +166,9 @@ const Post = ({ posts, user, removePost }) => {
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 "
+                onClick={() => {
+                  setShowmodal({ comment: !showmodal.comment });
+                }}
               >
                 <span className="text-xl text-slate-400">
                   <FaCommentAlt />
@@ -169,12 +176,18 @@ const Post = ({ posts, user, removePost }) => {
               </button>
             </div>
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
-              {post?.comments?.length !== undefined &&
+              {post?.comments?.length !== undefined && showmodal.comment ? (
                 post.comments.map((item) => (
                   <div key={item._id} className="mb-3 ">
                     <Comment username={item.username} content={item.text} />
                   </div>
-                ))}
+                ))
+              ) : (
+                <Comment
+                  username={post?.comments[0]?.username}
+                  content={post?.comments[0]?.text}
+                />
+              )}
               <CreateCommentForm post={post} id={user?.id} />
             </div>
           </div>

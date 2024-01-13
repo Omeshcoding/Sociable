@@ -5,7 +5,7 @@ import { Sidebar } from '../Components';
 const SharedLayout = ({ user, setUser }) => {
   return (
     <>
-      <Header name={user?.name} />
+      <Header name={user?.name} id={user?.id} />
       {user && <Sidebar setUser={setUser} id={user?.id} />}
       <Outlet />
     </>
