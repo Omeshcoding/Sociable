@@ -4,16 +4,19 @@ import Post from '../Components/Post';
 import HanumanJi from '../assets/Lord-Hanuman.jpg';
 import userService from '../services/posts';
 import { useParams } from 'react-router-dom';
+import { AuthData } from '../auth/AppWrapper';
 
-const Profile = ({ user }) => {
+const Profile = () => {
   const [post, setPost] = useState([]);
+  const { user } = AuthData();
+
   const id = useParams().id;
+
   useEffect(() => {
     userService
       .getAll()
-      .then((posts) =>
-        setPost(() => posts?.filter((post) => post?.user?.id === id))
-      );
+      .then((posts) => setPost(posts?.filter((post) => post?.user?.id === id)));
+
     userService.setToken(user?.token);
   }, [id, user]);
 
@@ -29,6 +32,7 @@ const Profile = ({ user }) => {
       return setPost(newPost);
     });
   };
+
   return (
     <>
       <div className="flex flex-col">

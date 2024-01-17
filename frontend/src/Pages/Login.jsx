@@ -4,7 +4,7 @@ import Button from '../Components/Button';
 import Input from '../Components/Input';
 import '../styles/login.css';
 import loginService from '../services/login';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
 
 const Login = ({ setUser }) => {
@@ -14,6 +14,8 @@ const Login = ({ setUser }) => {
     message: '',
     type: '',
   });
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ const Login = ({ setUser }) => {
       setUser(user);
       setEmail('');
       setPassword('');
+      navigate('/feed');
     } catch (error) {
       setNotification({
         message: 'Wrong username or password',
