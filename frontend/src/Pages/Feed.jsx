@@ -15,9 +15,7 @@ const Feed = ({ user, setUser }) => {
     postService.getAll().then((posts) => setPosts(posts));
     postService.setToken(user?.token);
   }, [user]);
-  if (user === null) {
-    return <Login setUser={setUser} />;
-  }
+
   const sortPost = posts.sort((a, b) => {
     const dateA = new Date(a.createdAt);
     const dateB = new Date(b.createdAt);

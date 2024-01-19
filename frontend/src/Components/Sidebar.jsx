@@ -1,8 +1,10 @@
 import { BiNews, BiLogIn } from 'react-icons/bi';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthData } from '../auth/AppWrapper';
 
-const Sidebar = ({ id, setUser }) => {
+const Sidebar = () => {
+  const { user, setUser } = AuthData();
   const location = useLocation();
   const handleLogout = () => {
     window.localStorage.removeItem('loggedSociableappUser');
@@ -22,9 +24,9 @@ const Sidebar = ({ id, setUser }) => {
         </Link>
 
         <Link
-          to={`/profile/${id}`}
+          to={`/profile/${user?.id}`}
           className={`flex  items-center bg-background-3 px-4 py-1 rounded-xl  transition-all duration-300 hover:text-background-1 ${
-            location.pathname === `/profile/${id}`
+            location.pathname === `/profile/${user?.id}`
               ? 'text-white'
               : 'text-secondary-3'
           }`}
