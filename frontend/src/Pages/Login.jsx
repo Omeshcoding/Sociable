@@ -6,8 +6,10 @@ import '../styles/login.css';
 import loginService from '../services/login';
 import { Link, useNavigate } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
+import { AuthData } from '../auth/AppWrapper';
 
-const Login = ({ setUser }) => {
+const Login = () => {
+  const { setUser } = AuthData() || {};
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState({

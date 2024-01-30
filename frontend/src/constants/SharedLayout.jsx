@@ -1,12 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../Components/Header';
 import { Sidebar } from '../Components';
+import { AuthData } from '../auth/AppWrapper';
 
-const SharedLayout = ({ user, setUser }) => {
+const SharedLayout = () => {
+  const { user = {} } = AuthData() || {};
   return (
     <>
-      <Header name={user?.name} id={user?.id} />
-      {user && <Sidebar setUser={setUser} id={user?.id} />}
+      <Header />
+      {user && <Sidebar />}
       <Outlet />
     </>
   );

@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { CreatePost } from '../Components';
 import Posts from '../Components/Posts';
 import postService from '../services/posts';
-import Login from './Login';
-const Feed = ({ user, setUser }) => {
+import { AuthData } from '../auth/AppWrapper';
+const Feed = () => {
+  const { user = {} } = AuthData() || {};
   const [posts, setPosts] = useState([]);
 
   const handleAddPosts = (newObject) => {
@@ -13,8 +14,7 @@ const Feed = ({ user, setUser }) => {
   };
   useEffect(() => {
     postService.getAll().then((posts) => setPosts(posts));
-    postService.setToken(user?.token);
-  }, [user]);
+  }, []);
 
   const sortPost = posts.sort((a, b) => {
     const dateA = new Date(a.createdAt);

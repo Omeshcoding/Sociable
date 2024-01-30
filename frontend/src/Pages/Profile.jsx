@@ -8,7 +8,7 @@ import { AuthData } from '../auth/AppWrapper';
 
 const Profile = () => {
   const [post, setPost] = useState([]);
-  const { user } = AuthData();
+  const { user = {} } = AuthData() || {};
 
   const id = useParams().id;
 
@@ -16,9 +16,8 @@ const Profile = () => {
     userService
       .getAll()
       .then((posts) => setPost(posts?.filter((post) => post?.user?.id === id)));
-
-    userService.setToken(user?.token);
-  }, [id, user]);
+    // userService.setToken(user?.token);
+  }, [id]);
 
   const handleAddPosts = (newObject) => {
     userService.create(newObject).then((returnedPost) => {
@@ -32,7 +31,7 @@ const Profile = () => {
       return setPost(newPost);
     });
   };
-
+  console.log(post);
   return (
     <>
       <div className="flex flex-col">
