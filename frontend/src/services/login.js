@@ -9,6 +9,6 @@ const login = async (credentials) => {
 
 const isTokenExpired = (token) => {
   const cuurentTimeStamp = Math.floor(Date.now() / 1000);
-  return cuurentTimeStamp >= token.exp;
+  return cuurentTimeStamp > token.exp;
 };
 export default { login, isTokenExpired };

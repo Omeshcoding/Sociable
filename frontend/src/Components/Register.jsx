@@ -54,7 +54,7 @@ const Register = () => {
             btnName="Register"
             btnStyle=" bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />
-          <Link to="/feed">
+          <Link to="/login">
             <Button
               type="submit"
               btnName="Login"

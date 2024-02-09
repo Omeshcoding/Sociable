@@ -16,7 +16,7 @@ const Profile = () => {
     userService
       .getAll()
       .then((posts) => setPost(posts?.filter((post) => post?.user?.id === id)));
-    // userService.setToken(user?.token);
+    userService.setToken(user?.token);
   }, [id]);
 
   const handleAddPosts = (newObject) => {
@@ -31,7 +31,7 @@ const Profile = () => {
       return setPost(newPost);
     });
   };
-  console.log(post);
+
   return (
     <>
       <div className="flex flex-col">

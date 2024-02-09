@@ -1,41 +1,45 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { RenderRoutes } from '../constants/RenderNavigation';
 import { jwtDecode } from 'jwt-decode';
 import tokenCheck from '../services/login';
 import { useNavigate } from 'react-router-dom';
-import SharedLayout from '../constants/SharedLayout';
+
 const AuthContext = createContext();
 
 export const AuthData = () => useContext(AuthContext);
 
-export const AuthWrapper = () => {
+export const AuthWrapper = ({ children }) => {
   const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
+
+  const login = (user) => {
+    setUser(user);
+    if (user) {
+      return navigate('/feed');
+    }
+  };
+  const logout = () => {
+    window.localStorage.removeItem('loggedSociableappUser');
+    setUser(null);
+    return navigate('/login');
+  };
   const token = localStorage.getItem('loggedSociableappUser');
 
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    const expiredTime = tokenCheck.isTokenExpired(decodedToken);
-
-    if (expiredTime) {
-      window.localStorage.removeItem('loggedSociableappUser');
-      navigate('/login');
-    }
-  }
   useEffect(() => {
     if (token) {
-      const user = JSON.parse(token);
-      setUser(user);
+      const decodedToken = jwtDecode(token);
+      const expiredTime = tokenCheck.isTokenExpired(decodedToken);
+      if (expiredTime) {
+        window.localStorage.removeItem('loggedSociableappUser');
+        setUser(null);
+        return navigate('/login');
+      }
     }
-  }, [token]);
+  }, [token, navigate]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      <>
-        <SharedLayout />
-
-        <RenderRoutes />
-      </>
+    <AuthContext.Provider value={{ user, login, setUser, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
