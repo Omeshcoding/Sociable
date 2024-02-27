@@ -177,14 +177,21 @@ const Post = ({ posts, user, removePost }) => {
             </div>
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
               {post?.comments?.length !== undefined && showmodal.comment ? (
-                post.comments.map((item) => (
-                  <div key={item._id} className="mb-3 ">
-                    <Comment username={item.username} content={item.text} />
-                  </div>
-                ))
+                post.comments.map((item) => {
+                  return (
+                    <div key={item._id} className="mb-3 ">
+                      <Comment
+                        user={item?.user}
+                        username={item.username}
+                        content={item.text}
+                      />
+                    </div>
+                  );
+                })
               ) : (
                 <Comment
                   username={post?.comments[0]?.username}
+                  user={post?.comments[0]?.user}
                   content={post?.comments[0]?.text}
                 />
               )}
