@@ -1,47 +1,45 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import Header from '../Components/Header';
-import { Sidebar } from '../Components';
-import { RenderRoutes } from '../constants/RenderNavigation';
 import { jwtDecode } from 'jwt-decode';
 import tokenCheck from '../services/login';
 import { useNavigate } from 'react-router-dom';
+
 const AuthContext = createContext();
 
 export const AuthData = () => useContext(AuthContext);
-const token = localStorage.getItem('loggedSociableappUser');
 
-if (token) {
-  const decodedToken = jwtDecode(token);
-  console.log(
-    tokenCheck.isTokenExpired(decodedToken),
-    decodedToken.iat - decodedToken.exp
-  );
-  if (decodedToken.iat < decodedToken.exp) {
-    window.localStorage.removeItem('loggedSociableappUser');
-  }
-  // <Feed />;
-}
-export const AuthWrapper = () => {
+export const AuthWrapper = ({ children }) => {
   const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
+
+  const login = (user) => {
+    setUser(user);
+    if (user) {
+      return navigate('/feed');
+    }
+  };
+  const logout = () => {
+    window.localStorage.removeItem('loggedSociableappUser');
+    setUser(null);
+    return navigate('/login');
+  };
+  const token = localStorage.getItem('loggedSociableappUser');
+
   useEffect(() => {
     if (token) {
-      const user = JSON.parse(token);
-      setUser(user);
+      const decodedToken = jwtDecode(token);
+      const expiredTime = tokenCheck.isTokenExpired(decodedToken);
+      if (expiredTime) {
+        window.localStorage.removeItem('loggedSociableappUser');
+        setUser(null);
+        return navigate('/login');
+      }
     }
-  }, []);
-  useEffect(() => {
-    if (user === null) {
-      navigate('/login');
-    }
-  }, [navigate, user]);
+  }, [token, navigate]);
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      <>
-        <Header />
-        <Sidebar />
-        <RenderRoutes />
-      </>
+    <AuthContext.Provider value={{ user, login, setUser, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };

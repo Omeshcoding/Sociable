@@ -6,8 +6,11 @@ import '../styles/login.css';
 import loginService from '../services/login';
 import { Link, useNavigate } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
+import { AuthData } from '../auth/AppWrapper';
 
-const Login = ({ setUser }) => {
+const Login = () => {
+  const { login } = AuthData() || {};
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [notification, setNotification] = useState({
@@ -24,11 +27,11 @@ const Login = ({ setUser }) => {
         email,
         password,
       });
+      login(user);
       window.localStorage.setItem(
         'loggedSociableappUser',
         JSON.stringify(user)
       );
-      setUser(user);
       setEmail('');
       setPassword('');
       navigate('/feed');
@@ -45,8 +48,8 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
-      <div className="h-10">
+    <div className=" h-[100vh]  mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
+      <div className="h-10 mb-10">
         {notification.type === 'error' && (
           <ErrorNotification
             message={notification.message}

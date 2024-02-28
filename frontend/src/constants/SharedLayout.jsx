@@ -2,11 +2,11 @@ import { Outlet } from 'react-router-dom';
 import Header from '../Components/Header';
 import { Sidebar } from '../Components';
 
-const SharedLayout = ({ user, setUser }) => {
+const SharedLayout = () => {
   return (
     <>
-      <Header name={user?.name} id={user?.id} />
-      {user && <Sidebar setUser={setUser} id={user?.id} />}
+      <Header />
+      <Sidebar />
       <Outlet />
     </>
   );

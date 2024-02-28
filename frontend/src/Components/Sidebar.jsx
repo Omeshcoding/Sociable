@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthData } from '../auth/AppWrapper';
 
 const Sidebar = () => {
-  const { user, setUser } = AuthData();
+  const { user = {}, setUser } = AuthData() || {};
+  const id = user?.id;
   const location = useLocation();
   const handleLogout = () => {
     window.localStorage.removeItem('loggedSociableappUser');
@@ -24,9 +25,9 @@ const Sidebar = () => {
         </Link>
 
         <Link
-          to={`/profile/${user?.id}`}
+          to={`/profile/${id}`}
           className={`flex  items-center bg-background-3 px-4 py-1 rounded-xl  transition-all duration-300 hover:text-background-1 ${
-            location.pathname === `/profile/${user?.id}`
+            location.pathname === `/profile/${id}`
               ? 'text-white'
               : 'text-secondary-3'
           }`}
@@ -35,7 +36,7 @@ const Sidebar = () => {
           <span className=" ml-2 my-auto sm:block hidden">profile</span>
         </Link>
         <Link
-          to="/feed"
+          to="/login"
           className="flex items-center bg-background-3 px-4 py-1 rounded-xl text-secondary-3 transition-all duration-300 hover:text-background-1"
           onClick={handleLogout}
         >
