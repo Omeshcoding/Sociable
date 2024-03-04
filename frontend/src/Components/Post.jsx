@@ -9,6 +9,7 @@ import CreatePostForm from './CreatePostForm';
 import CreateCommentForm from './CreateCommentForm';
 import Comment from './Comment';
 import { Link } from 'react-router-dom';
+import { createdTime } from '../helper/createdDate';
 
 const Post = ({ posts, user, removePost }) => {
   let [updateLike, setUpdateLike] = useState(posts?.likes);
@@ -44,6 +45,8 @@ const Post = ({ posts, user, removePost }) => {
     setShowmodal(!showmodal);
   };
 
+  const timeCreated = createdTime(post.createdAt);
+
   return (
     <>
       {posts && (
@@ -51,11 +54,14 @@ const Post = ({ posts, user, removePost }) => {
           <div className="w-[95%] sm:w-[90%] md:w-[610px] mx-auto md:flex flex-col justify-center items-center    md:px-14 my-2">
             <div className="rounded-md my-1 bg-white px-5 py-3 w-full shadow-sm">
               <div className="flex justify-between relative rounded-md">
-                <Link
-                  to={`/profile/${post?.user?.id}`}
-                  className="mb-4 font-bold capitalize"
-                >
-                  {post.user?.name}
+                <Link to={`/profile/${post?.user?.id}`} className="mb-4 ">
+                  <h4 className="text-lg  font-semibold capitalize">
+                    {' '}
+                    {post.user?.name}
+                  </h4>
+                  <small className="text-[12px] text-bold text-gray-500">
+                    {timeCreated}{' '}
+                  </small>
                 </Link>
                 {user?.id === post?.user?.id && (
                   <>
@@ -178,11 +184,13 @@ const Post = ({ posts, user, removePost }) => {
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
               {post?.comments?.length !== undefined && showmodal.comment ? (
                 post.comments.map((item) => {
+                  console.log(item.createdAt);
                   return (
                     <div key={item._id} className="mb-3 ">
                       <Comment
                         user={item?.user}
                         username={item.username}
+                        createdAt={item?.createdAt}
                         content={item.text}
                       />
                     </div>
@@ -192,6 +200,7 @@ const Post = ({ posts, user, removePost }) => {
                 <Comment
                   username={post?.comments[0]?.username}
                   user={post?.comments[0]?.user}
+                  createdAt={post?.comments[0]?.createdAt}
                   content={post?.comments[0]?.text}
                 />
               )}
