@@ -1,30 +1,17 @@
 import Button from '././Button';
 import FormHeader from './Forms/FormHeader';
 
-const CreatePostForm = ({
-  // post,
-  postUpdate,
-  handleUpdatePost,
-  setPostUpdate,
-}) => {
+const CreatePostForm = ({ postUpdate, handleUpdatePost, setPostUpdate }) => {
   return (
     <>
       <form
         action="/feed"
         encType="multipart/form-data"
         onSubmit={handleUpdatePost}
-        className=" font-Inter w-[90%] md:w-[100%]  border-lightGray border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out mx-auto"
+        className=" font-Inter w-[90%] md:w-[100%]  border-lightGray border-2 px-20 py-3 lg:py-6  lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out mx-auto"
       >
         <div className=" flex flex-col">
           <FormHeader title="Update Post" />
-          {/* <Textarea
-            cols="10"
-            rows="1"
-            value={postUpdate}
-            post={postUpdate}
-            placeholder="Write you title"
-            setPostUpdate={setPostUpdate}
-          /> */}
           <textarea
             name="post"
             cols="10"
@@ -37,16 +24,6 @@ const CreatePostForm = ({
             }
           />
 
-          {/* setPostUpdate({...post,title:e.target.value}) */}
-          {/* <Textarea
-            cols="10"
-            rows="4"
-            value={postUpdate.caption}
-            post={postUpdate}
-            setPostUpdate={setPostUpdate}
-            onSubmit={handleUpdatePost}
-            placeholder="Write you thoughts ..."
-          /> */}
           <textarea
             cols="10"
             rows="4"

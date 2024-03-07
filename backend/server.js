@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 // Routes that server is listening to
-
+app.use(express.static('dist'));
 app.use(cors());
 app.use(middleware.tokenExtractor);
 app.use('/', mainRoutes);
