@@ -184,7 +184,6 @@ const Post = ({ posts, user, removePost }) => {
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
               {post?.comments?.length !== undefined && showmodal.comment ? (
                 post.comments.map((item) => {
-                  console.log(item.createdAt);
                   return (
                     <div key={item._id} className="mb-3 ">
                       <Comment

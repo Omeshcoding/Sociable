@@ -6,11 +6,11 @@ import { AuthData } from '../auth/AppWrapper';
 const Feed = () => {
   const { user = {} } = AuthData() || {};
   const [posts, setPosts] = useState([]);
-
   const handleAddPosts = (newObject) => {
     postService.create(newObject).then((returnedPost) => {
       setPosts(posts.concat(returnedPost));
     });
+    postService.setToken(user?.token);
   };
   useEffect(() => {
     postService.getAll().then((posts) => setPosts(posts));

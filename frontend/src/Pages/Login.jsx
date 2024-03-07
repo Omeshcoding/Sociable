@@ -4,6 +4,7 @@ import Button from '../Components/Button';
 import Input from '../Components/Input';
 import '../styles/login.css';
 import loginService from '../services/login';
+import postService from '../services/posts';
 import { Link, useNavigate } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
 import { AuthData } from '../auth/AppWrapper';
@@ -28,6 +29,8 @@ const Login = () => {
         password,
       });
       login(user);
+
+      postService.setToken(user?.token);
       window.localStorage.setItem(
         'loggedSociableappUser',
         JSON.stringify(user)

@@ -38,7 +38,7 @@ export const AuthWrapper = ({ children }) => {
   }, [token, navigate]);
 
   return (
-    <AuthContext.Provider value={{ login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
