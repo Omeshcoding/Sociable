@@ -24,17 +24,15 @@ const Post = ({ posts, user, removePost }) => {
   });
 
   const handleLikesUpdate = () => {
-    if (like) {
-      setUpdateLike(--updateLike);
-    } else {
-      setUpdateLike(++updateLike);
-    }
-    setLike(!like);
+    setUpdateLike((prevUpdateLike) =>
+      like ? prevUpdateLike - 1 : prevUpdateLike + 1
+    );
+    setLike((prevLike) => !prevLike);
     const newObject = {
       title: post.title,
       caption: post.caption,
       image: post?.image,
-      likes: updateLike,
+      likes: like ? updateLike - 1 : updateLike + 1,
     };
     postService.update(post.id, newObject);
   };
@@ -184,7 +182,6 @@ const Post = ({ posts, user, removePost }) => {
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
               {post?.comments?.length !== undefined && showmodal.comment ? (
                 post.comments.map((item) => {
-                  console.log(item.createdAt);
                   return (
                     <div key={item._id} className="mb-3 ">
                       <Comment

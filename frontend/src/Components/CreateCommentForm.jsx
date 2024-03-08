@@ -1,16 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import postService from '../services/posts';
+import { AuthData } from '../auth/AppWrapper';
 
-const CreateCommentForm = ({ post, id }) => {
+const CreateCommentForm = ({ post }) => {
   const [comment, setComment] = useState('');
-
+  const { user } = AuthData();
   const textAreaRef = useRef(null);
 
   const handleComment = async (e) => {
     e.preventDefault();
     const newComment = {
       comment: comment,
-      user: id,
+      user: user?.id,
     };
 
     try {
@@ -20,17 +21,17 @@ const CreateCommentForm = ({ post, id }) => {
       console.error('Error creating comment:', error);
     }
   };
-
-  useEffect(() => {
+  const handleCommentBoxSize = (value) => {
+    setComment(value);
     textAreaRef.current.style.height = 'auto';
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
-  }, [comment, post]);
+  };
 
   return (
     <form className="flex flex-col gap-2  rounded-xl" onSubmit={handleComment}>
       <textarea
         value={comment}
-        onChange={({ target }) => setComment(target.value)}
+        onChange={(e) => handleCommentBoxSize(e.target.value)}
         ref={textAreaRef}
         rows="1"
         className="w-full border-2 border-rose-200 resize-none outline-none px-3 py-3 rounded-xl overflow-hidden bg-gray-100"
