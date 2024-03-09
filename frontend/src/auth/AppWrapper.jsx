@@ -26,6 +26,7 @@ export const AuthWrapper = ({ children }) => {
   const token = localStorage.getItem('loggedSociableappUser');
 
   useEffect(() => {
+    setUser(JSON.parse(token));
     if (token) {
       const decodedToken = jwtDecode(token);
       const expiredTime = tokenCheck.isTokenExpired(decodedToken);
@@ -36,7 +37,7 @@ export const AuthWrapper = ({ children }) => {
       }
     }
   }, [token, navigate]);
-
+  console.log(user);
   return (
     <AuthContext.Provider value={{ user, login, setUser, logout }}>
       {children}
