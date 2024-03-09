@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { PostData } from '../context/PostWrapper';
 
-const CreatePost = ({ addNewPost }) => {
+const CreatePost = () => {
   const [newPost, setNewPost] = useState({
     title: '',
     file: '',
     caption: '',
   });
   const [show, setShow] = useState(false);
+  const { addPosts } = PostData() || [];
   const handleAddPost = (e) => {
     e.preventDefault();
-    addNewPost(newPost);
+    addPosts(newPost);
     setNewPost({
       title: '',
       file: '',
@@ -22,7 +24,6 @@ const CreatePost = ({ addNewPost }) => {
       return { ...prev, ...post };
     });
   };
-
   return (
     <section className="my-8 flex flex-col items-center justify-center gap-10 ">
       <button

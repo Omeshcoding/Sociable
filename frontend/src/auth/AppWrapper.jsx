@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import tokenCheck from '../services/login';
 import { useNavigate } from 'react-router-dom';
+import postService from '../services/posts';
 
 const AuthContext = createContext();
 
@@ -23,10 +24,12 @@ export const AuthWrapper = ({ children }) => {
     setUser(null);
     return navigate('/login');
   };
-  const token = localStorage.getItem('loggedSociableappUser');
 
   useEffect(() => {
-    setUser(JSON.parse(token));
+    const token = localStorage.getItem('loggedSociableappUser');
+    const user = JSON.parse(token);
+    setUser(user);
+    postService.setToken(user?.token);
     if (token) {
       const decodedToken = jwtDecode(token);
       const expiredTime = tokenCheck.isTokenExpired(decodedToken);
@@ -36,8 +39,8 @@ export const AuthWrapper = ({ children }) => {
         return navigate('/login');
       }
     }
-  }, [token, navigate]);
-  console.log(user);
+  }, [navigate]);
+
   return (
     <AuthContext.Provider value={{ user, login, setUser, logout }}>
       {children}

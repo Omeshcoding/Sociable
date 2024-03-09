@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
-import postService from '../services/posts';
 import { AuthData } from '../auth/AppWrapper';
 
-const CreateCommentForm = ({ post }) => {
+const CreateCommentForm = ({ post, handleAddComment, isSubmitting }) => {
   const [comment, setComment] = useState('');
   const { user } = AuthData();
   const textAreaRef = useRef(null);
@@ -13,13 +12,8 @@ const CreateCommentForm = ({ post }) => {
       comment: comment,
       user: user?.id,
     };
-
-    try {
-      await postService.createComment(post.id, newComment);
-      setComment('');
-    } catch (error) {
-      console.error('Error creating comment:', error);
-    }
+    handleAddComment(post.id, newComment);
+    // setComment('');
   };
   const handleCommentBoxSize = (value) => {
     setComment(value);
@@ -37,8 +31,11 @@ const CreateCommentForm = ({ post }) => {
         className="w-full border-2 border-rose-200 resize-none outline-none px-3 py-3 rounded-xl overflow-hidden bg-gray-100"
         type="text"
       />
-      <button className="bg-secondary-3 hover:bg-background-1 duration-300 transition-all py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm font-semibold">
-        Post
+      <button
+        type="submit"
+        className="bg-secondary-3 hover:bg-background-1 duration-300 transition-all py-2 px-4 rounded-xl ml-auto scroll-hide text-lg shadow-sm font-semibold"
+      >
+        {isSubmitting ? 'Posting' : 'Post'}
       </button>
     </form>
   );

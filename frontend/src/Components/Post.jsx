@@ -10,8 +10,11 @@ import CreateCommentForm from './CreateCommentForm';
 import Comment from './Comment';
 import { Link } from 'react-router-dom';
 import { createdTime } from '../helper/createdDate';
+import { PostData } from '../context/PostWrapper';
 
-const Post = ({ posts, user, removePost }) => {
+const Post = ({ posts, user }) => {
+  const { removePost } = PostData() || [];
+  const [isSubmitting, setIsSubmitting] = useState(false);
   let [updateLike, setUpdateLike] = useState(posts?.likes);
   const [post, setPostUpdate] = useState(posts);
 
@@ -39,12 +42,24 @@ const Post = ({ posts, user, removePost }) => {
 
   const handleUpdatePost = (e) => {
     e.preventDefault();
+    console.log(e);
     postService.updatePost(posts.id, post);
     setShowmodal(!showmodal);
   };
+  const handleAddComment = async (id, newComment) => {
+    try {
+      setIsSubmitting(true);
+      await postService.createComment(id, newComment);
+      await postService
+        .getSinglePost(post.id)
+        .then((data) => setPostUpdate(data));
+      setIsSubmitting(false);
+    } catch (error) {
+      console.error('Error creating comment:', error);
+    }
+  };
 
   const timeCreated = createdTime(post.createdAt);
-
   return (
     <>
       {posts && (
@@ -63,7 +78,7 @@ const Post = ({ posts, user, removePost }) => {
                 </Link>
                 {user?.id === post?.user?.id && (
                   <>
-                    <button onClick={() => setShow(!show)}>
+                    <button type="button" onClick={() => setShow(!show)}>
                       <BsThreeDotsVertical />
                     </button>
                     {show && (
@@ -102,12 +117,17 @@ const Post = ({ posts, user, removePost }) => {
                     <h4>Do you want to Delete this Post ?</h4>
                     <div className="flex w-[50%] mx-auto justify-between px-5 mt-10">
                       <button
-                        onClick={() => removePost(post.id, post?.title)}
+                        type="button"
+                        onClick={() => {
+                          removePost(post.id, post?.title);
+                          setShowmodal(!showmodal);
+                        }}
                         className="text-rose-500 border-rose-300 border-2 px-4 rounded-md drop-shadow-lg hover:border-rose-500 transition-all duration-400"
                       >
                         Yes
                       </button>
                       <button
+                        type="button"
                         className="text-green-500 border-green-300 border-2 px-6 rounded-md drop-shadow-lg hover:border-green-500 py-1 transition-all duration-400"
                         onClick={() => setShowmodal(!showmodal)}
                       >
@@ -174,34 +194,40 @@ const Post = ({ posts, user, removePost }) => {
                   setShowmodal({ comment: !showmodal.comment });
                 }}
               >
-                <span className="text-xl text-slate-400">
+                <span className="flex justify-center gap-2 items-center text-xl text-slate-400">
                   <FaCommentAlt />
+                  {post?.comments?.length}
                 </span>
               </button>
             </div>
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
-              {post?.comments?.length !== undefined && showmodal.comment ? (
-                post.comments.map((item) => {
-                  return (
-                    <div key={item._id} className="mb-3 ">
-                      <Comment
-                        user={item?.user}
-                        username={item.username}
-                        createdAt={item?.createdAt}
-                        content={item.text}
-                      />
-                    </div>
-                  );
-                })
-              ) : (
-                <Comment
-                  username={post?.comments[0]?.username}
-                  user={post?.comments[0]?.user}
-                  createdAt={post?.comments[0]?.createdAt}
-                  content={post?.comments[0]?.text}
-                />
-              )}
-              <CreateCommentForm post={post} id={user?.id} />
+              {post?.comments?.length !== undefined && showmodal.comment
+                ? post.comments.map((item) => {
+                    return (
+                      <div key={item._id} className="mb-3 ">
+                        <Comment
+                          user={item?.user}
+                          username={item.username}
+                          createdAt={item?.createdAt}
+                          content={item.text}
+                        />
+                      </div>
+                    );
+                  })
+                : post?.comments?.length !== undefined && (
+                    <Comment
+                      username={post?.comments[0]?.username}
+                      user={post?.comments[0]?.user}
+                      createdAt={post?.comments[0]?.createdAt}
+                      content={post?.comments[0]?.text}
+                    />
+                  )}
+              <CreateCommentForm
+                handleAddComment={handleAddComment}
+                post={post}
+                isSubmitting={isSubmitting}
+                id={user?.id}
+              />
             </div>
           </div>
         </div>
