@@ -1,12 +1,7 @@
 import Button from '././Button';
 import FormHeader from './Forms/FormHeader';
 
-const CreatePostForm = ({
-  // post,
-  postUpdate,
-  handleUpdatePost,
-  setPostUpdate,
-}) => {
+const CreatePostForm = ({ postUpdate, handleUpdatePost, setPostUpdate }) => {
   return (
     <>
       <form
@@ -17,36 +12,19 @@ const CreatePostForm = ({
       >
         <div className=" flex flex-col">
           <FormHeader title="Update Post" />
-          {/* <Textarea
-            cols="10"
-            rows="1"
-            value={postUpdate}
-            post={postUpdate}
-            placeholder="Write you title"
-            setPostUpdate={setPostUpdate}
-          /> */}
+
           <textarea
             name="post"
             cols="10"
             rows="1"
             value={postUpdate.title}
-            className="my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
+            className=" my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
             placeholder="Write you title"
             onChange={(e) =>
               setPostUpdate({ ...postUpdate, title: e.target.value })
             }
           />
 
-          {/* setPostUpdate({...post,title:e.target.value}) */}
-          {/* <Textarea
-            cols="10"
-            rows="4"
-            value={postUpdate.caption}
-            post={postUpdate}
-            setPostUpdate={setPostUpdate}
-            onSubmit={handleUpdatePost}
-            placeholder="Write you thoughts ..."
-          /> */}
           <textarea
             cols="10"
             rows="4"

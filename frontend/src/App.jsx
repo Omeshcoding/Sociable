@@ -6,40 +6,43 @@ import Feed from './Pages/Feed';
 import SharedLayout from './constants/SharedLayout';
 import Register from './Components/Register';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import { PostWrapper } from './context/PostWrapper';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthWrapper>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <SharedLayout />
-              </ProtectedRoute>
-            }
-          >
+        <PostWrapper>
+          <Routes>
             <Route
-              path="/feed"
+              path="/"
               element={
                 <ProtectedRoute>
-                  <Feed />
+                  <SharedLayout />
                 </ProtectedRoute>
               }
-            ></Route>
-            <Route
-              path="/profile/:id"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            ></Route>
-          </Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-        </Routes>
+            >
+              <Route
+                path="/feed"
+                element={
+                  <ProtectedRoute>
+                    <Feed />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path="/profile/:id"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              ></Route>
+            </Route>
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+          </Routes>
+        </PostWrapper>
       </AuthWrapper>
     </BrowserRouter>
   );
