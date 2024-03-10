@@ -20,7 +20,7 @@ module.exports = {
       console.log(error);
     }
   },
-  postComments: async (req, res) => {
+  postComment: async (req, res) => {
     const body = req.body;
     const postId = req.params.id;
     try {
@@ -44,6 +44,22 @@ module.exports = {
       res.status(201).json(comment);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+  deleteComment: async (req, res) => {
+    console.log(req.params.id);
+    const comment = await Comment.findById(req.params.id);
+    const userId = req.body?.userId;
+    const user = comment?.user.toString();
+
+    if (userId === user) {
+      await Comment.findByIdAndRemove(req.params.id);
+      res.status(204).end();
+    } else {
+      res
+        .status(401)
+        .json({ error: 'invalid user sign in from different account' })
+        .end();
     }
   },
 };

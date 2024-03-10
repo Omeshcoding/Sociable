@@ -13,7 +13,7 @@ const CreateCommentForm = ({ post, handleAddComment, isSubmitting }) => {
       user: user?.id,
     };
     handleAddComment(post.id, newComment);
-    // setComment('');
+    setComment('');
   };
   const handleCommentBoxSize = (value) => {
     setComment(value);
@@ -27,6 +27,7 @@ const CreateCommentForm = ({ post, handleAddComment, isSubmitting }) => {
         value={comment}
         onChange={(e) => handleCommentBoxSize(e.target.value)}
         ref={textAreaRef}
+        required
         rows="1"
         className="w-full border-2 border-rose-200 resize-none outline-none px-3 py-3 rounded-xl overflow-hidden bg-gray-100"
         type="text"
