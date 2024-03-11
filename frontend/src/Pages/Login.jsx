@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import Button from '../Components/Button';
 import Input from '../Components/Input';
 import '../styles/login.css';
@@ -9,7 +8,7 @@ import { ErrorNotification } from '../Components/ErrorHandler';
 import { AuthData } from '../auth/AppWrapper';
 
 const Login = () => {
-  const { login } = AuthData() || {};
+  const { login, isSubmitting } = AuthData() || {};
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -75,7 +74,7 @@ const Login = () => {
             setValue={setPassword}
           />
           <Button
-            btnName="Login"
+            btnName={!isSubmitting ? 'Login' : 'Logging in'}
             type="submit"
             btnStyle="bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />

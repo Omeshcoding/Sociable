@@ -10,14 +10,16 @@ export const AuthData = () => useContext(AuthContext);
 
 export const AuthWrapper = ({ children }) => {
   const [user, setUser] = useState(null);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const login = (user) => {
+    setIsSubmitting(true);
     setUser(user);
     if (user) {
       return navigate('/feed');
     }
+    setIsSubmitting(false);
   };
   const logout = () => {
     window.localStorage.removeItem('loggedSociableappUser');
@@ -42,7 +44,9 @@ export const AuthWrapper = ({ children }) => {
   }, [navigate]);
 
   return (
-    <AuthContext.Provider value={{ user, login, setUser, logout }}>
+    <AuthContext.Provider
+      value={{ isSubmitting, user, login, setUser, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

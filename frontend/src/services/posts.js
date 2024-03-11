@@ -55,7 +55,10 @@ const updatePost = async (id, newObject) => {
   return response.data;
 };
 const createComment = async (id, newComment) => {
-  const response = await axios.post(`${baseUrl}/comment/${id}`, newComment);
+  const response = await axios.post(
+    `${baseUrl}/comment/postcomment/${id}`,
+    newComment
+  );
   return response.data;
 };
 const getComments = async () => {
