@@ -25,17 +25,17 @@ const Register = () => {
   };
 
   return (
-    <div className=" h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
-      <div className="bg-background-3 h-auto w-[500px] rounded-lg p-6 ">
+    <div className="h-[650px] sm:h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
+      <div className="bg-background-3 h-auto mx-1 sm:w-[500px] rounded-lg sm:p-6 px-12 py-8 ">
         <h3 className="text-center mb-6 text-3xl  text-secondary-3 font-semibold">
           Welcome To Sociable
         </h3>
         <form
           onSubmit={handleRegisterUser}
-          className="flex flex-col mx-auto gap-4 w-[60%]"
+          className="flex flex-col mx-auto gap-4 sm:w-[60%]"
         >
           {newUser && <Navigate to="/feed" replace={true} />}
-          <Input type="email" label="Email" email={email} setValue={setEmail} />
+
           <Input
             type="name"
             placeholder="John dew"
@@ -43,6 +43,8 @@ const Register = () => {
             name={name}
             setValue={setName}
           />
+          <Input type="email" label="Email" email={email} setValue={setEmail} />
+
           <Input
             type="password"
             label="Password"

@@ -46,13 +46,16 @@ const Post = ({ posts, user }) => {
     postService.updatePost(posts.id, post);
     setShowmodal(!showmodal);
   };
+  const fetchSingelPost = async () => {
+    await postService
+      .getSinglePost(post.id)
+      .then((data) => setPostUpdate(data));
+  };
   const handleAddComment = async (id, newComment) => {
     try {
       setIsSubmitting(true);
       await postService.createComment(id, newComment);
-      await postService
-        .getSinglePost(post.id)
-        .then((data) => setPostUpdate(data));
+      fetchSingelPost();
       setIsSubmitting(false);
     } catch (error) {
       console.error('Error creating comment:', error);
@@ -140,6 +143,7 @@ const Post = ({ posts, user }) => {
                 {showmodal.edit && (
                   <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md shadow-md">
                     <button
+                      type="button"
                       className="text-black absolute  text-4xl right-4 "
                       onClick={() => setShowmodal(!showmodal)}
                     >
