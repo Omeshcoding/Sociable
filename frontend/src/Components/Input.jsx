@@ -5,6 +5,7 @@ const Input = ({ type, label, value, setValue }) => {
       <input
         type={type}
         value={value}
+        required
         className="input-field  p-2 rounded-md text-secondary-2"
         onChange={({ target }) => setValue(target.value)}
       />

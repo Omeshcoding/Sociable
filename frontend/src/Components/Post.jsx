@@ -46,17 +46,30 @@ const Post = ({ posts, user }) => {
     postService.updatePost(posts.id, post);
     setShowmodal(!showmodal);
   };
+  const fetchSingelPost = async () => {
+    await postService
+      .getSinglePost(post.id)
+      .then((data) => setPostUpdate(data));
+  };
   const handleAddComment = async (id, newComment) => {
     try {
       setIsSubmitting(true);
       await postService.createComment(id, newComment);
-      await postService
-        .getSinglePost(post.id)
-        .then((data) => setPostUpdate(data));
+      fetchSingelPost();
       setIsSubmitting(false);
     } catch (error) {
       console.error('Error creating comment:', error);
     }
+  };
+
+  const toggleModal = (modelName) => {
+    if (toggleModal) {
+      setShowmodal((prev) => ({
+        ...prev,
+        [modelName]: !prev[modelName],
+      }));
+    }
+    setShow(!show);
   };
 
   const timeCreated = createdTime(post.createdAt);
@@ -89,20 +102,14 @@ const Post = ({ posts, user }) => {
                         <button
                           type="button"
                           className="flex text-green-500  items-center gap-2"
-                          onClick={() => {
-                            setShowmodal({ edit: true });
-                            setShow(!show);
-                          }}
+                          onClick={() => toggleModal('edit')}
                         >
                           <CiEdit /> Edit
                         </button>
 
                         <button
                           type="button"
-                          onClick={() => {
-                            setShowmodal({ delete: true });
-                            setShow(!show);
-                          }}
+                          onClick={() => toggleModal('delete')}
                           className="flex text-rose-600 items-center gap-2"
                         >
                           <MdDelete /> Delete
@@ -115,7 +122,7 @@ const Post = ({ posts, user }) => {
                 {showmodal.delete && (
                   <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[150px] top-40 mx-auto py-4 px-2 rounded-md shadow-md text-center text-xl font-semibold">
                     <h4>Do you want to Delete this Post ?</h4>
-                    <div className="flex w-[50%] mx-auto justify-between px-5 mt-10">
+                    <div className="flex w-[70%] md:w-[50%] mx-auto justify-between sm:px-5 mt-4 sm:mt-10">
                       <button
                         type="button"
                         onClick={() => {
@@ -140,6 +147,7 @@ const Post = ({ posts, user }) => {
                 {showmodal.edit && (
                   <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md shadow-md">
                     <button
+                      type="button"
                       className="text-black absolute  text-4xl right-4 "
                       onClick={() => setShowmodal(!showmodal)}
                     >
@@ -165,7 +173,7 @@ const Post = ({ posts, user }) => {
             <div>
               <img
                 src={post?.image}
-                alt=""
+                alt={post?.text}
                 className="bg-cover object-center bg-center bg-slate-300  w-[100%] md:w-[auto] rounded-md"
               />
             </div>
@@ -190,9 +198,7 @@ const Post = ({ posts, user }) => {
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 "
-                onClick={() => {
-                  setShowmodal({ comment: !showmodal.comment });
-                }}
+                onClick={() => toggleModal('comment')}
               >
                 <span className="flex justify-center gap-2 items-center text-xl text-slate-400">
                   <FaCommentAlt />
@@ -210,12 +216,16 @@ const Post = ({ posts, user }) => {
                           username={item.username}
                           createdAt={item?.createdAt}
                           content={item.text}
+                          toggleModal={toggleModal}
+                          show={show}
                         />
                       </div>
                     );
                   })
                 : post?.comments?.length !== undefined && (
                     <Comment
+                      toggleModal={toggleModal}
+                      show={show}
                       username={post?.comments[0]?.username}
                       user={post?.comments[0]?.user}
                       createdAt={post?.comments[0]?.createdAt}

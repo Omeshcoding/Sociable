@@ -8,7 +8,7 @@ import { ErrorNotification } from '../Components/ErrorHandler';
 import { AuthData } from '../auth/AppWrapper';
 
 const Login = () => {
-  const { login, isSubmitting } = AuthData() || {};
+  const { login } = AuthData() || {};
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,11 +16,13 @@ const Login = () => {
     message: '',
     type: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const user = await loginService.login({
         email,
@@ -31,12 +33,13 @@ const Login = () => {
         'loggedSociableappUser',
         JSON.stringify(user)
       );
+      setIsSubmitting(false);
       setEmail('');
       setPassword('');
       navigate('/feed');
     } catch (error) {
       setNotification({
-        message: 'Wrong username or password',
+        message: 'Wrong email or password',
         type: 'error',
       });
       setTimeout(() => {
@@ -45,9 +48,8 @@ const Login = () => {
       console.log('wrong Credentials');
     }
   };
-
   return (
-    <div className=" h-[100vh]  mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
+    <div className=" h-[100vh]  sm:mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200 mx-1">
       <div className="h-10 mb-10">
         {notification.type === 'error' && (
           <ErrorNotification
@@ -57,14 +59,14 @@ const Login = () => {
         )}
       </div>
 
-      <div className="bg-background-3 h-auto w-[500px] rounded-lg p-6 ">
+      <div className="bg-background-3 h-auto md:w-[500px] rounded-lg md:p-6 px-12 py-8">
         <h3 className="text-center mb-6 text-3xl  text-secondary-3 font-semibold">
           Welcome To Sociable
         </h3>
 
         <form
           onSubmit={handleLogin}
-          className="flex flex-col mx-auto gap-4 w-[60%]"
+          className="flex flex-col mx-auto gap-4 md:w-[60%]"
         >
           <Input type="email" value={email} label="Email" setValue={setEmail} />
           <Input
@@ -74,7 +76,7 @@ const Login = () => {
             setValue={setPassword}
           />
           <Button
-            btnName={!isSubmitting ? 'Login' : 'Logging in'}
+            btnName={isSubmitting ? 'Logging in' : 'Login'}
             type="submit"
             btnStyle="bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />
