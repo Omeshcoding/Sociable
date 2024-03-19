@@ -4,12 +4,23 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import { useState } from 'react';
-const Comment = ({ username, content, user, createdAt }) => {
+import { AuthData } from '../auth/AppWrapper';
+const Comment = ({
+  username,
+  content,
+  commentUser,
+  createdAt,
+  handleDeleteComment,
+  commentId,
+}) => {
+  const { user } = AuthData() || {};
   const [show, setShow] = useState(false);
+
   const timeCreated = createdTime(createdAt);
   const toggleCommentModal = () => {
     setShow(!show);
   };
+
   return (
     <div className="relative">
       <div className=" flex justify-between">
@@ -23,7 +34,7 @@ const Comment = ({ username, content, user, createdAt }) => {
             )}
           </p>
         </Link>
-        {user && (
+        {commentUser === user.id && (
           <button type="button" onClick={toggleCommentModal}>
             <BsThreeDotsVertical />
           </button>
@@ -34,11 +45,18 @@ const Comment = ({ username, content, user, createdAt }) => {
           className="absolute right-0 top-7 bg-gray-600 w-[100px] px-2 text-white py-2 rounded-lg"
           onMouseLeave={() => setShow(!show)}
         >
-          <button type="button" className="flex gap-2 items-center">
+          <button
+            type="button"
+            className="flex gap-2 items-center hover:text-gray-200"
+          >
             <CiEdit />
-            {'Edit '}
+            Edit
           </button>
-          <button type="button" className="flex gap-2 items-center">
+          <button
+            type="button"
+            className="flex gap-2 items-center hover:text-gray-200"
+            onClick={() => handleDeleteComment(commentId, user.id)}
+          >
             <MdDelete /> Delete
           </button>
         </div>
