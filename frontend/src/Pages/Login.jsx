@@ -48,6 +48,14 @@ const Login = () => {
       console.log('wrong Credentials');
     }
   };
+
+  const populateForm = () => {
+    const email = 'jay@gmail.com';
+    const password = 'jayjayjay';
+    setEmail(email);
+    setPassword(password);
+  };
+
   return (
     <div className=" h-[100vh]  sm:mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200 mx-1">
       <div className="h-10 mb-10">
@@ -75,6 +83,14 @@ const Login = () => {
             value={password}
             setValue={setPassword}
           />
+
+          <span
+            className="text-white border-2 border-secondary-3 text-center py-2 rounded-xl font-semibold"
+            onClick={populateForm}
+          >
+            Sign in as a Test User
+          </span>
+
           <Button
             btnName={isSubmitting ? 'Logging in' : 'Login'}
             type="submit"
