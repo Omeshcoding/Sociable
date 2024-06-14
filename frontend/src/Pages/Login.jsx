@@ -5,7 +5,7 @@ import '../styles/login.css';
 import loginService from '../services/login';
 import { Link, useNavigate } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
-import { AuthData } from '../auth/AppWrapper';
+import { AuthData } from '../auth/AuthWrapper';
 
 const Login = () => {
   const { login } = AuthData() || {};
@@ -92,7 +92,7 @@ const Login = () => {
           </span>
 
           <Button
-            btnName={isSubmitting ? 'Logging in' : 'Login'}
+            btnName={isSubmitting ? 'Logging you in . . .' : 'Login'}
             type="submit"
             btnStyle="bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />

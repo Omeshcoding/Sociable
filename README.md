@@ -8,13 +8,13 @@ Welcome to Sociable, a vibrant and interactive photo-sharing web application tha
   Share your favorite moments effortlessly. Upload photos, add captions, and instantly share them with friends and followers.
 
 - **Feed:**
-Immerse yourself in a curated Feed. Explore a diverse range of visual stories.
+  Immerse yourself in a curated Feed. Explore a diverse range of visual stories.
 
 - **User Profiles:**
-Each user has a dedicated profile, showcasing their uploaded photos.
-
+  Each user has a dedicated profile, showcasing their uploaded photos.
 
 ## Technologies Used
+
 ### Frontend:
 
 - **React.js** for a dynamic and responsive user interface.
@@ -28,6 +28,6 @@ Each user has a dedicated profile, showcasing their uploaded photos.
 ### Authentication:
 
 - **JWT** - (JSON Web Tokens) for secure user authentication.
-Cloud Storage:
+  Cloud Storage:
 
 Utilizes cloud storage services for reliable photo storage and retrieval.

@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import postService from '../services/posts';
+import { AuthData } from '../auth/AuthWrapper';
 
 const PostContext = createContext();
 
 export const PostData = () => useContext(PostContext);
 
 export const PostWrapper = ({ children }) => {
+  const { user = {} } = AuthData() || {};
   const [allPosts, setAllPosts] = useState([]);
 
   const [render, setRender] = useState(false);
@@ -27,10 +29,27 @@ export const PostWrapper = ({ children }) => {
     setRender(true);
   };
 
+  const fetchPosts = () => {
+    try {
+      postService.getAll().then((posts) =>
+        setAllPosts(
+          posts.sort((a, b) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB - dateA;
+          })
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    postService.getAll().then((posts) => setAllPosts(posts));
+    if (user) {
+      fetchPosts();
+    }
     setRender(false);
-  }, [render]);
+  }, [user, render]);
 
   return (
     <PostContext.Provider value={{ allPosts, addPosts, removePost }}>

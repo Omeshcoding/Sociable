@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import postService from '../services/posts';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
-import { CiEdit } from 'react-icons/ci';
-import { MdDelete } from 'react-icons/md';
+
 import { IoClose } from 'react-icons/io5';
 import CreatePostForm from './CreatePostForm';
 import CreateCommentForm from './CreateCommentForm';
 import Comment from './Comment';
-import { Link } from 'react-router-dom';
+
 import { createdTime } from '../helper/createdDate';
 import { PostData } from '../context/PostWrapper';
+import Loading from './Loading';
+import PostHeader from './Post/PostHeader';
+import Editsubmenu from './Post/Editsubmenu';
 
 const Post = ({ posts, user }) => {
   const { removePost } = PostData() || [];
@@ -42,7 +44,6 @@ const Post = ({ posts, user }) => {
 
   const handleUpdatePost = (e) => {
     e.preventDefault();
-    console.log(e);
     postService.updatePost(posts.id, post);
     setShowmodal(!showmodal);
   };
@@ -61,6 +62,11 @@ const Post = ({ posts, user }) => {
       console.error('Error creating comment:', error);
     }
   };
+  const handleDeleteComment = async (id) => {
+    console.log(id);
+    // await postService.deleteComments(id);
+    // fetchSingelPost();
+  };
 
   const toggleModal = (modelName) => {
     if (toggleModal) {
@@ -72,51 +78,41 @@ const Post = ({ posts, user }) => {
     setShow(!show);
   };
 
+  const handleShow = () => {
+    setShow(!show);
+  };
+  const handleDeletePost = (id, title) => {
+    removePost(id, title);
+    setShowmodal(!showmodal);
+  };
   const timeCreated = createdTime(post.createdAt);
+
   return (
     <>
       {posts && (
         <div className=" bg-gray-200/70  flex  justify-center flex-col items-center sm:py-6 mb-12 lg:w-[100%]  rounded-md w-[95%] mx-auto">
           <div className="w-[95%] sm:w-[90%] md:w-[610px] mx-auto md:flex flex-col justify-center items-center    md:px-14 my-2">
             <div className="rounded-md my-1 bg-white px-5 py-3 w-full shadow-sm">
-              <div className="flex justify-between relative rounded-md">
-                <Link to={`/profile/${post?.user?.id}`} className="mb-4 ">
-                  <h4 className="text-lg  font-semibold capitalize">
-                    {' '}
-                    {post.user?.name}
-                  </h4>
-                  <small className="text-[12px] text-bold text-gray-500">
-                    {timeCreated}{' '}
-                  </small>
-                </Link>
+              <div className="flex relative justify-between  rounded-md z-0">
+                <PostHeader
+                  time={timeCreated}
+                  name={post.user?.name}
+                  id={post.user?.id}
+                />
+
                 {user?.id === post?.user?.id && (
-                  <>
+                  <div className="relative top-2">
                     <button type="button" onClick={() => setShow(!show)}>
                       <BsThreeDotsVertical />
                     </button>
                     {show && (
-                      <div
-                        className="absolute rounded-md top-10 right-1 flex flex-col gap-4 bg-white px-4 py-3 font-semibold "
-                        onMouseLeave={() => setShow(!show)}
-                      >
-                        <button
-                          type="button"
-                          className="flex text-green-500  items-center gap-2"
-                          onClick={() => toggleModal('edit')}
-                        >
-                          <CiEdit /> Edit
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => toggleModal('delete')}
-                          className="flex text-rose-600 items-center gap-2"
-                        >
-                          <MdDelete /> Delete
-                        </button>
-                      </div>
+                      <Editsubmenu
+                        handleShow={handleShow}
+                        toggleModal={toggleModal}
+                        show={show}
+                      />
                     )}
-                  </>
+                  </div>
                 )}
 
                 {showmodal.delete && (
@@ -125,10 +121,7 @@ const Post = ({ posts, user }) => {
                     <div className="flex w-[70%] md:w-[50%] mx-auto justify-between sm:px-5 mt-4 sm:mt-10">
                       <button
                         type="button"
-                        onClick={() => {
-                          removePost(post.id, post?.title);
-                          setShowmodal(!showmodal);
-                        }}
+                        onClick={() => handleDeletePost(post.id, post?.title)}
                         className="text-rose-500 border-rose-300 border-2 px-4 rounded-md drop-shadow-lg hover:border-rose-500 transition-all duration-400"
                       >
                         Yes
@@ -136,7 +129,7 @@ const Post = ({ posts, user }) => {
                       <button
                         type="button"
                         className="text-green-500 border-green-300 border-2 px-6 rounded-md drop-shadow-lg hover:border-green-500 py-1 transition-all duration-400"
-                        onClick={() => setShowmodal(!showmodal)}
+                        onClick={() => setShowmodal(!showmodal.delete)}
                       >
                         No
                       </button>
@@ -145,7 +138,10 @@ const Post = ({ posts, user }) => {
                 )}
 
                 {showmodal.edit && (
-                  <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md shadow-md">
+                  <div
+                    className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md shadow-md z-20"
+                    onMouseLeave={() => setShowmodal(!showmodal.edit)}
+                  >
                     <button
                       type="button"
                       className="text-black absolute  text-4xl right-4 "
@@ -170,13 +166,19 @@ const Post = ({ posts, user }) => {
               </p>
               <p className=" text-md text-gray-600">{post.caption}</p>
             </div>
-            <div>
-              <img
-                src={post?.image}
-                alt={post?.text}
-                className="bg-cover object-center bg-center bg-slate-300  w-[100%] md:w-[auto] rounded-md"
-              />
-            </div>
+            {post?.image !== null && (
+              <div>
+                <Suspense fallback={<Loading />}>
+                  {' '}
+                  <img
+                    src={post?.image}
+                    alt={post?.text}
+                    loading="lazy"
+                    className="bg-cover object-center bg-center bg-slate-300  w-[100%] md:w-[auto] rounded-md"
+                  />
+                </Suspense>
+              </div>
+            )}
 
             <div className="flex justify-around  bg-white rounded-md py-4 w-[100%] my-1  lg:w-[500px] text-xl">
               <button
@@ -210,14 +212,16 @@ const Post = ({ posts, user }) => {
               {post?.comments?.length !== undefined && showmodal.comment
                 ? post.comments.map((item) => {
                     return (
-                      <div key={item._id} className="mb-3 ">
+                      <div key={item.id} className="mb-3 ">
                         <Comment
-                          user={item?.user}
+                          commentUser={item?.user}
                           username={item.username}
                           createdAt={item?.createdAt}
                           content={item.text}
                           toggleModal={toggleModal}
                           show={show}
+                          commentId={item.id}
+                          handleDeleteComment={handleDeleteComment}
                         />
                       </div>
                     );
@@ -227,9 +231,11 @@ const Post = ({ posts, user }) => {
                       toggleModal={toggleModal}
                       show={show}
                       username={post?.comments[0]?.username}
-                      user={post?.comments[0]?.user}
+                      commentUser={post?.comments[0]?.user}
                       createdAt={post?.comments[0]?.createdAt}
                       content={post?.comments[0]?.text}
+                      commentId={post?.comments[0]?.id}
+                      handleDeleteComment={handleDeleteComment}
                     />
                   )}
               <CreateCommentForm

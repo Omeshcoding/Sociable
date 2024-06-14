@@ -4,7 +4,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import { useState } from 'react';
-import { AuthData } from '../auth/AppWrapper';
+import { AuthData } from '../auth/AuthWrapper';
 const Comment = ({
   username,
   content,
@@ -47,14 +47,14 @@ const Comment = ({
         >
           <button
             type="button"
-            className="flex gap-2 items-center hover:text-gray-200"
+            className="flex gap-2 items-center hover:text-green-500"
           >
             <CiEdit />
             Edit
           </button>
           <button
             type="button"
-            className="flex gap-2 items-center hover:text-gray-200"
+            className="flex gap-2 items-center hover:text-rose-600"
             onClick={() => handleDeleteComment(commentId, user.id)}
           >
             <MdDelete /> Delete
@@ -62,7 +62,7 @@ const Comment = ({
         </div>
       )}
       <p>{content}</p>
-      <hr className="text-gray-600 mt-2" />
+      <hr className="text-gray-600 my-2" />
     </div>
   );
 };

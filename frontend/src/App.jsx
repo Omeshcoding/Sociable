@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthWrapper } from './auth/AppWrapper';
+import { AuthWrapper } from './auth/AuthWrapper';
 import Login from './Pages/Login';
 import Profile from './Pages/Profile';
 import Feed from './Pages/Feed';
@@ -7,42 +7,48 @@ import SharedLayout from './constants/SharedLayout';
 import Register from './Components/Register';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import { PostWrapper } from './context/PostWrapper';
+import { Suspense } from 'react';
+import Loading from './Components/Loading';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthWrapper>
-        <PostWrapper>
-          <Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <SharedLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route
-              path="/"
+              path="/feed"
               element={
-                <ProtectedRoute>
-                  <SharedLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route
-                path="/feed"
-                element={
+                <PostWrapper>
                   <ProtectedRoute>
                     <Feed />
                   </ProtectedRoute>
-                }
-              ></Route>
-              <Route
-                path="/profile/:id"
-                element={
+                </PostWrapper>
+              }
+            ></Route>
+            <Route
+              path="/profile/:id"
+              element={
+                <PostWrapper>
                   <ProtectedRoute>
-                    <Profile />
+                    <Suspense fallback={<Loading />}>
+                      <Profile />
+                    </Suspense>
                   </ProtectedRoute>
-                }
-              ></Route>
-            </Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-          </Routes>
-        </PostWrapper>
+                </PostWrapper>
+              }
+            ></Route>
+          </Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+        </Routes>
       </AuthWrapper>
     </BrowserRouter>
   );

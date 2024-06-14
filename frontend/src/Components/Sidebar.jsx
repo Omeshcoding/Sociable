@@ -1,7 +1,7 @@
 import { BiNews, BiLogIn } from 'react-icons/bi';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom';
-import { AuthData } from '../auth/AppWrapper';
+import { AuthData } from '../auth/AuthWrapper';
 
 const Sidebar = () => {
   const { setUser } = AuthData() || {};
@@ -15,7 +15,7 @@ const Sidebar = () => {
 
   return (
     <nav className="flex flex-col lg:h-[100%] w-[100%] lg:w-[20%] px-3 md:px-10 capitalize justify-center fixed bottom-0 lg:top-0 shadow-xl py-4 gap-10 md:gap-16 lg:gap-20 z-10 text-md md:text-xl bg-secondary-3">
-      <div className="flex sticky buttom-0 lg:flex-col gap-14 sm:gap-8  mx-auto  font-semibold">
+      <div className="flex sticky buttom-0 lg:flex-col gap-14 sm:gap-8  mx-auto  font-semibold max-[1100px]:text-[18px]">
         <Link
           to="/feed"
           className={`flex  items-center bg-background-3 px-4 py-[0.35rem] rounded-xl  transition-all duration-300 hover:text-background-1 ${
@@ -23,7 +23,7 @@ const Sidebar = () => {
           }`}
         >
           <BiNews />
-          <span className=" ml-2 my-auto sm:block hidden">my Feed</span>
+          <span className=" ml-2  my-auto sm:block hidden">my Feed</span>
         </Link>
 
         <Link

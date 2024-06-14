@@ -2,7 +2,7 @@ import { CreatePost } from '../Components';
 import Post from '../Components/Post';
 import abstract from '../assets/abstract.jpg';
 import { useParams } from 'react-router-dom';
-import { AuthData } from '../auth/AppWrapper';
+import { AuthData } from '../auth/AuthWrapper';
 import { PostData } from '../context/PostWrapper';
 
 const Profile = () => {

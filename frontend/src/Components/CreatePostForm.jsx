@@ -39,7 +39,7 @@ const CreatePostForm = ({ postUpdate, handleUpdatePost, setPostUpdate }) => {
             <Button
               btnName="Post your thought"
               btnType="button"
-              btnStyle="text-white text-[17px] font-normal px-4 py-3  mt-6 md:mt-0 bg-blue-600 hover:bg-blue-500 rounded-lg border-none ml-auto"
+              btnStyle="text-white hover:text-black font-semibold text-[17px] font-normal px-4 py-3  mt-6 md:mt-0 bg-secondary-3 hover:bg-background-1 rounded-lg border-none ml-auto"
             />
           </div>
         </div>
