@@ -72,11 +72,19 @@ const getComments = async () => {
   return response.data;
 };
 const deleteComments = async (id, userId) => {
-  const response = await axios.delete(
-    `${baseUrl}comment/deletecomment/${id}`,
-    userId
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    params: {
+      userId: userId,
+    },
+  };
+  const request = await axios.delete(
+    `${baseUrl}/comment/deletecomment/${id}`,
+    config
   );
-  return response.data;
+  return request.data;
 };
 
 export default {

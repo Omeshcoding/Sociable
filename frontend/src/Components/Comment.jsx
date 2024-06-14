@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { createdTime } from '../helper/createdDate';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import { useState } from 'react';
 import { AuthData } from '../auth/AuthWrapper';
@@ -47,14 +46,7 @@ const Comment = ({
         >
           <button
             type="button"
-            className="flex gap-2 items-center hover:text-green-500"
-          >
-            <CiEdit />
-            Edit
-          </button>
-          <button
-            type="button"
-            className="flex gap-2 items-center hover:text-rose-600"
+            className="flex gap-2 items-center hover:text-rose-200"
             onClick={() => handleDeleteComment(commentId, user.id)}
           >
             <MdDelete /> Delete

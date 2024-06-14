@@ -13,6 +13,7 @@ import { PostData } from '../context/PostWrapper';
 import Loading from './Loading';
 import PostHeader from './Post/PostHeader';
 import Editsubmenu from './Post/Editsubmenu';
+import ActionPrompts from './ReusableComponents/ActionPrompts';
 
 const Post = ({ posts, user }) => {
   const { removePost } = PostData() || [];
@@ -63,9 +64,8 @@ const Post = ({ posts, user }) => {
     }
   };
   const handleDeleteComment = async (id) => {
-    console.log(id);
-    // await postService.deleteComments(id);
-    // fetchSingelPost();
+    await postService.deleteComments(id, user.id);
+    fetchSingelPost();
   };
 
   const toggleModal = (modelName) => {
@@ -116,7 +116,15 @@ const Post = ({ posts, user }) => {
                 )}
 
                 {showmodal.delete && (
-                  <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[150px] top-40 mx-auto py-4 px-2 rounded-md shadow-md text-center text-xl font-semibold">
+                  <ActionPrompts
+                    type="Post"
+                    handleDeleteItem={handleDeletePost}
+                    toggleModal={toggleModal}
+                    id={post?.id}
+                    title={post?.title}
+                  />
+                )}
+                {/* <div className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[150px] top-40 mx-auto py-4 px-2 rounded-md shadow-md text-center text-xl font-semibold">
                     <h4>Do you want to Delete this Post ?</h4>
                     <div className="flex w-[70%] md:w-[50%] mx-auto justify-between sm:px-5 mt-4 sm:mt-10">
                       <button
@@ -129,14 +137,12 @@ const Post = ({ posts, user }) => {
                       <button
                         type="button"
                         className="text-green-500 border-green-300 border-2 px-6 rounded-md drop-shadow-lg hover:border-green-500 py-1 transition-all duration-400"
-                        onClick={() => setShowmodal(!showmodal.delete)}
+                        onClick={() => toggleModal('delete')}
                       >
                         No
                       </button>
                     </div>
-                  </div>
-                )}
-
+                  </div> */}
                 {showmodal.edit && (
                   <div
                     className="absolute md:left-[-70px] bg-white w-[100%] md:w-[600px] h-[500px]  mx-auto py-4 px-2 rounded-md shadow-md z-20"

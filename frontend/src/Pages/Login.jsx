@@ -28,8 +28,8 @@ const Login = () => {
         email,
         password,
       });
-      login(user);
-      window.localStorage.setItem(
+      await login(user);
+      await window.localStorage.setItem(
         'loggedSociableappUser',
         JSON.stringify(user)
       );

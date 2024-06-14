@@ -47,9 +47,8 @@ module.exports = {
     }
   },
   deleteComment: async (req, res) => {
-    console.log(req.params.id);
     const comment = await Comment.findById(req.params.id);
-    const userId = req.body?.userId;
+    const userId = req.query?.userId;
     const user = comment?.user.toString();
 
     if (userId === user) {
