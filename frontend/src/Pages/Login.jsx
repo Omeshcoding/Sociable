@@ -29,7 +29,7 @@ const Login = () => {
         password,
       });
       await login(user);
-      await window.localStorage.setItem(
+      window.localStorage.setItem(
         'loggedSociableappUser',
         JSON.stringify(user)
       );
@@ -38,6 +38,7 @@ const Login = () => {
       setPassword('');
       navigate('/feed');
     } catch (error) {
+      setIsSubmitting(false);
       setNotification({
         message: 'Wrong email or password',
         type: 'error',
