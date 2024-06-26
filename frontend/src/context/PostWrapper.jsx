@@ -11,6 +11,7 @@ export const PostWrapper = ({ children }) => {
   const [allPosts, setAllPosts] = useState([]);
 
   const [render, setRender] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const addPosts = async (newObject) => {
     try {
       const returnedPost = await postService.create(newObject);
@@ -30,6 +31,7 @@ export const PostWrapper = ({ children }) => {
   };
 
   const fetchPosts = () => {
+    setIsSubmitting(true);
     try {
       postService.getAll().then((posts) =>
         setAllPosts(
@@ -40,6 +42,7 @@ export const PostWrapper = ({ children }) => {
           })
         )
       );
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +55,9 @@ export const PostWrapper = ({ children }) => {
   }, [user, render]);
 
   return (
-    <PostContext.Provider value={{ allPosts, addPosts, removePost }}>
+    <PostContext.Provider
+      value={{ allPosts, addPosts, removePost, isSubmitting }}
+    >
       {children}
     </PostContext.Provider>
   );

@@ -33,7 +33,7 @@ const Comment = ({
             )}
           </p>
         </Link>
-        {commentUser === user.id && (
+        {commentUser === user?.id && (
           <button type="button" onClick={toggleCommentModal}>
             <BsThreeDotsVertical />
           </button>

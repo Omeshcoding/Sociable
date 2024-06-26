@@ -4,10 +4,11 @@ import Posts from '../Components/Posts';
 import postService from '../services/posts';
 import { AuthData } from '../auth/AuthWrapper';
 import { PostData } from '../context/PostWrapper';
+import Loading from '../Components/Loading';
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const { user = {} } = AuthData() || {};
-  const { allPosts = [] } = PostData() || [];
+  const { allPosts = [], isSubmitting } = PostData() || [];
 
   const handleAddPosts = (newObject) => {
     postService.create(newObject).then((returnedPost) => {
@@ -15,6 +16,9 @@ const Feed = () => {
     });
   };
 
+  if (isSubmitting) {
+    return <Loading />;
+  }
   return (
     <>
       <main className="flex flex-col">

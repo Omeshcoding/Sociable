@@ -10,19 +10,19 @@ export const AuthData = () => useContext(AuthContext);
 
 export const AuthWrapper = ({ children }) => {
   const [user, setUser] = useState(null);
-
   const navigate = useNavigate();
 
   const login = (user) => {
     setUser(user);
+
     if (user) {
-      return navigate('/feed');
+      navigate('/feed');
     }
   };
   const logout = () => {
     window.localStorage.removeItem('loggedSociableappUser');
     setUser(null);
-    return navigate('/login');
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const AuthWrapper = ({ children }) => {
       if (expiredTime) {
         window.localStorage.removeItem('loggedSociableappUser');
         setUser(null);
-        return navigate('/login');
+        navigate('/login');
       }
     }
   }, [navigate]);

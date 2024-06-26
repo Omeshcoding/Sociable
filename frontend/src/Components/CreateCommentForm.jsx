@@ -2,8 +2,8 @@ import { useRef, useState } from 'react';
 import { AuthData } from '../auth/AuthWrapper';
 
 const CreateCommentForm = ({ post, handleAddComment, isSubmitting }) => {
+  const { user } = AuthData() || {};
   const [comment, setComment] = useState('');
-  const { user } = AuthData();
   const textAreaRef = useRef(null);
 
   const handleComment = async (e) => {

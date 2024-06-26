@@ -49,9 +49,11 @@ const Post = ({ posts, user }) => {
     setShowmodal(!showmodal);
   };
   const fetchSingelPost = async () => {
+    setIsSubmitting(true);
     await postService
       .getSinglePost(post.id)
       .then((data) => setPostUpdate(data));
+    setIsSubmitting(false);
   };
   const handleAddComment = async (id, newComment) => {
     try {
@@ -86,7 +88,9 @@ const Post = ({ posts, user }) => {
     setShowmodal(!showmodal);
   };
   const timeCreated = createdTime(post.createdAt);
-
+  if (isSubmitting) {
+    return <Loading />;
+  }
   return (
     <>
       {posts && (
