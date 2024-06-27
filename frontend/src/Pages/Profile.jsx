@@ -20,24 +20,26 @@ const Profile = () => {
             <div className="flex items-center mt-6">
               <img
                 src={abstract}
-                alt=""
+                alt="profilepic"
                 className="w-[100px] backdrop-blur-lg  shadow-xl rounded-full h-[100px]"
               />
-              <div className="">
-                <p className=" ml-4 capitalize font-bold">{user?.name}</p>
-                <p className="ml-4 font-bold">{user?.email}</p>
+              <div>
+                <p className=" ml-4 capitalize font-bold">
+                  {singlePost[0]?.user?.name}
+                </p>
+                <p className="ml-4 font-bold">{singlePost[0]?.user?.email}</p>
               </div>
             </div>
           </div>
           <div className="mx-auto mb-20 lg:mb-5">
             <CreatePost />
-            {singlePost.length === 0 ? (
+            {singlePost?.length === 0 ? (
               <p className="text-center text-2xl font-semibold border-secondary-3 border-2 py-1 rounded-md">
                 No post Here
               </p>
             ) : (
               singlePost &&
-              singlePost.map((post) => {
+              singlePost?.map((post) => {
                 return (
                   <div key={post?.id}>
                     <Post posts={post} user={user} />

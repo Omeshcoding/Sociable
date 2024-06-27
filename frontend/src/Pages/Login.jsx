@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
 import { AuthData } from '../auth/AuthWrapper';
 import Loading from '../Components/Loading';
-
 const Login = () => {
   const { login } = AuthData() || {};
 
@@ -44,20 +43,18 @@ const Login = () => {
       setTimeout(() => {
         setNotification({ message: '', type: '' });
       }, 5000);
-      console.log('wrong Credentials');
     }
   };
 
   const populateForm = () => {
     const email = 'jay@gmail.com';
-    const password = 'jayjayjay';
+    const password = import.meta.env.VITE_API_USER_PASSWORD;
     setEmail(email);
     setPassword(password);
   };
   if (isSubmitting) {
     return <Loading />;
   }
-
   return (
     <div className=" h-[100vh]  sm:mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200 mx-1">
       <div className="h-10 mb-10">

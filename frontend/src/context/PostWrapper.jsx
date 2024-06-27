@@ -12,13 +12,28 @@ export const PostWrapper = ({ children }) => {
 
   const [render, setRender] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState({
+    message: '',
+    type: '',
+  });
+
   const addPosts = async (newObject) => {
+    setIsSubmitting(true);
     try {
       const returnedPost = await postService.create(newObject);
       setAllPosts((prevPost) => [...prevPost, returnedPost]);
       setRender(true);
+      setIsSubmitting(false);
     } catch (error) {
+      setIsSubmitting(false);
       console.error('Error adding post:', error);
+      setNotification({
+        message: 'Please add title,description and an image',
+        type: 'error',
+      });
+      setTimeout(() => {
+        setNotification({ message: '', type: '' });
+      }, 5000);
     }
   };
   const removePost = (id) => {
@@ -56,7 +71,7 @@ export const PostWrapper = ({ children }) => {
 
   return (
     <PostContext.Provider
-      value={{ allPosts, addPosts, removePost, isSubmitting }}
+      value={{ allPosts, addPosts, removePost, isSubmitting, notification }}
     >
       {children}
     </PostContext.Provider>
