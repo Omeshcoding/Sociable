@@ -14,6 +14,9 @@ export default {
         'background-3': '#023047',
         'background-4': '#8ecae6',
       },
+      backgroundImage: {
+        'hero-pattern': "url('./public/social.jpg')",
+      },
     },
   },
   plugins: [],

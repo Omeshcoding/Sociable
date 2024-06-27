@@ -25,7 +25,7 @@ const Register = () => {
   };
 
   return (
-    <div className="h-[650px] sm:h-[100vh] mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200">
+    <div className="h-[650px] sm:h-[100vh] mx-auto flex-col flex items-center justify-center  bg-hero-pattern bg-cover ">
       <div className="bg-background-3 h-auto mx-1 sm:w-[500px] rounded-lg sm:p-6 px-12 py-8 ">
         <h3 className="text-center mb-6 text-3xl  text-secondary-3 font-semibold">
           Welcome To Sociable

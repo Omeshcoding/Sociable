@@ -11,7 +11,7 @@ const ErrorNotification = ({ message, type }) => {
   if (!type) return null;
   return (
     <div
-      className={` text-rose-400 px-4 py-1  border-rose-500 border-2 rounded-md shadow-lg bg-zinc-300 max-md:text-sm text-lg`}
+      className={` text-rose-400 px-4 py-1  border-rose-500 border-2 rounded-md shadow-lg bg-zinc-300/30 max-md:text-sm text-lg`}
     >
       {message}
     </div>
