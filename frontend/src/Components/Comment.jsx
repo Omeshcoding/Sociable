@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { createdTime } from '../helper/createdDate';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import { useState } from 'react';
-import { AuthData } from '../auth/AppWrapper';
+import { AuthData } from '../auth/AuthWrapper';
 const Comment = ({
   username,
   content,
@@ -34,7 +33,7 @@ const Comment = ({
             )}
           </p>
         </Link>
-        {commentUser === user.id && (
+        {commentUser === user?.id && (
           <button type="button" onClick={toggleCommentModal}>
             <BsThreeDotsVertical />
           </button>
@@ -47,14 +46,7 @@ const Comment = ({
         >
           <button
             type="button"
-            className="flex gap-2 items-center hover:text-gray-200"
-          >
-            <CiEdit />
-            Edit
-          </button>
-          <button
-            type="button"
-            className="flex gap-2 items-center hover:text-gray-200"
+            className="flex gap-2 items-center hover:text-rose-200"
             onClick={() => handleDeleteComment(commentId, user.id)}
           >
             <MdDelete /> Delete
@@ -62,7 +54,7 @@ const Comment = ({
         </div>
       )}
       <p>{content}</p>
-      <hr className="text-gray-600 mt-2" />
+      <hr className="text-gray-600 my-2" />
     </div>
   );
 };

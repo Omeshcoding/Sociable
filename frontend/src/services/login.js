@@ -6,9 +6,13 @@ const login = async (credentials) => {
 
   return response.data;
 };
+const getUsers = async () => {
+  const response = await axios.get(`baseUrl/users`);
+  return response.data;
+};
 
 const isTokenExpired = (token) => {
   const cuurentTimeStamp = Math.floor(Date.now() / 1000);
   return cuurentTimeStamp > token.exp;
 };
-export default { login, isTokenExpired };
+export default { login, isTokenExpired, getUsers };

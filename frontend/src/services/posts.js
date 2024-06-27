@@ -61,14 +61,32 @@ const createComment = async (id, newComment) => {
   );
   return response.data;
 };
-const getComments = async () => {
-  const response = await axios.get(`${baseUrl}/comment`);
-  return response.data;
-};
+
 const getSinglePost = async (id) => {
   const response = await axios.get(`${baseUrl}/post/${id}`);
   return response.data;
 };
+// Comments services
+const getComments = async () => {
+  const response = await axios.get(`${baseUrl}/comment`);
+  return response.data;
+};
+const deleteComments = async (id, userId) => {
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    params: {
+      userId: userId,
+    },
+  };
+  const request = await axios.delete(
+    `${baseUrl}/comment/deletecomment/${id}`,
+    config
+  );
+  return request.data;
+};
+
 export default {
   getAll,
   getUser,
@@ -80,4 +98,5 @@ export default {
   createComment,
   getComments,
   getSinglePost,
+  deleteComments,
 };

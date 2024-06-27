@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { PostData } from '../context/PostWrapper';
+import { ErrorNotification } from './ErrorHandler';
 
 const CreatePost = () => {
+  const { addPosts, isSubmitting, notification } = PostData() || [];
   const [newPost, setNewPost] = useState({
     title: '',
     file: '',
     caption: '',
   });
   const [show, setShow] = useState(false);
-  const { addPosts } = PostData() || [];
   const handleAddPost = (e) => {
     e.preventDefault();
     addPosts(newPost);
@@ -25,7 +26,7 @@ const CreatePost = () => {
     });
   };
   return (
-    <section className="my-8 flex flex-col items-center justify-center gap-10 ">
+    <section className="my-8 flex flex-col items-center justify-center gap-10 max-md:w-[100vw] md:w-[50vw]">
       <button
         onClick={() => setShow(!show)}
         type="button"
@@ -42,9 +43,9 @@ const CreatePost = () => {
           onSubmit={handleAddPost}
           className=" font-Inter w-[90%] md:w-[100%]  border-lightGray 
           bg-background-3
-          border-2 py-3 lg:py-6 px-2 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
+          border-2 py-3 lg:py-6 px-3 md:px-6 lg:px-10 rounded-[10px] transition-all duration-1000 ease-in-out "
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4 relative">
             <h3 className="text-xl md:text-2xl font-semibold text-secondary-3 ">
               <span className=" text-2xl text-background-1">•</span> Create New
               Post
@@ -55,7 +56,7 @@ const CreatePost = () => {
               cols="10"
               rows="1"
               value={newPost.title}
-              className="my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
+              className="outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
               placeholder="Write you title"
               onChange={({ target }) => handleNewPost({ title: target.value })}
             />
@@ -64,28 +65,45 @@ const CreatePost = () => {
               cols="10"
               rows="4"
               value={newPost.caption}
-              className="my-4 outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
+              className=" outline-none border-blue border-2  rounded-lg p-2 text-md text-darkGray text-[18px] focus:text-darkCharcoal resize-none"
               placeholder="Write you thoughts ..."
               onChange={({ target }) =>
                 handleNewPost({ caption: target.value })
               }
             />
-            <div className=" flex flex-col lg:flex-row justify-center py-2 ">
+            <div className=" flex  justify-center py-2 ">
               <input
                 type="file"
                 name="file"
-                className="text-background-1 text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1 my-b  lg:my-1  "
+                accept="image/*"
+                id="upload-file"
+                hidden
+                className=" text-background-1 text-[17px] font-normal px-2  bg-transparent rounded-lg border-gray-200 border-2 py-3 lg:py-1    "
                 onChange={({ target }) =>
                   handleNewPost({ file: target.files[0] })
                 }
               />
+              <label
+                htmlFor="upload-file"
+                className=" text-background-3 font-semibold text-[17px] max-md:text-sm  first-letter: px-4 py-3   bg-secondary-3  hover:bg-background-1 rounded-lg border-none "
+              >
+                Upload image
+              </label>
 
               <button
                 type="submit"
-                className="text-background-3 font-semibold text-[17px]  first-letter: px-4 py-3 lg:py-0 mt-6 md:mt-0 bg-secondary-3 hover:bg-background-1 rounded-lg border-none ml-auto"
+                className="text-background-3 font-semibold text-[17px] max-md:text-sm  first-letter: px-4 py-3  bg-secondary-3 hover:bg-background-1 rounded-lg border-none ml-auto"
               >
-                Post your thought
+                {isSubmitting ? 'Posting' : 'Post'}
               </button>
+            </div>
+            <div className="absolute bottom-4 h-10 mb-10 right-0">
+              {notification.type === 'error' && (
+                <ErrorNotification
+                  message={notification.message}
+                  type={notification.type}
+                />
+              )}
             </div>
           </div>
         </form>

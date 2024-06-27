@@ -3,10 +3,10 @@ import Button from '../Components/Button';
 import Input from '../Components/Input';
 import '../styles/login.css';
 import loginService from '../services/login';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
-import { AuthData } from '../auth/AppWrapper';
-
+import { AuthData } from '../auth/AuthWrapper';
+import Loading from '../Components/Loading';
 const Login = () => {
   const { login } = AuthData() || {};
 
@@ -18,8 +18,6 @@ const Login = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -28,7 +26,7 @@ const Login = () => {
         email,
         password,
       });
-      login(user);
+      await login(user);
       window.localStorage.setItem(
         'loggedSociableappUser',
         JSON.stringify(user)
@@ -36,8 +34,8 @@ const Login = () => {
       setIsSubmitting(false);
       setEmail('');
       setPassword('');
-      navigate('/feed');
     } catch (error) {
+      setIsSubmitting(false);
       setNotification({
         message: 'Wrong email or password',
         type: 'error',
@@ -45,17 +43,18 @@ const Login = () => {
       setTimeout(() => {
         setNotification({ message: '', type: '' });
       }, 5000);
-      console.log('wrong Credentials');
     }
   };
 
   const populateForm = () => {
     const email = 'jay@gmail.com';
-    const password = 'jayjayjay';
+    const password = import.meta.env.VITE_API_USER_PASSWORD;
     setEmail(email);
     setPassword(password);
   };
-
+  if (isSubmitting) {
+    return <Loading />;
+  }
   return (
     <div className=" h-[100vh]  sm:mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200 mx-1">
       <div className="h-10 mb-10">
@@ -85,14 +84,14 @@ const Login = () => {
           />
 
           <span
-            className="text-white border-2 border-secondary-3 text-center py-2 rounded-xl font-semibold"
+            className="text-white border-2 border-secondary-3 text-center py-2 rounded-xl font-semibold cursor-pointer"
             onClick={populateForm}
           >
             Sign in as a Test User
           </span>
 
           <Button
-            btnName={isSubmitting ? 'Logging in' : 'Login'}
+            btnName={isSubmitting ? 'Logging you in . . .' : 'Login'}
             type="submit"
             btnStyle="bg-secondary-3  text-background-3 font-semibold  w-full text-center py-2 px-6 rounded-xl "
           />
