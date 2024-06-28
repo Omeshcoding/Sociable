@@ -56,21 +56,19 @@ const Login = () => {
     return <Loading />;
   }
   return (
-    <div className=" h-[100vh]  sm:mx-auto flex-col flex items-center justify-center rounded-lg bg-slate-200 mx-1">
-      <div className="h-10 mb-10">
-        {notification.type === 'error' && (
-          <ErrorNotification
-            message={notification.message}
-            type={notification.type}
-          />
-        )}
-      </div>
-
-      <div className="bg-background-3 h-auto md:w-[500px] rounded-lg md:p-6 px-12 py-8">
+    <div className=" h-[100vh]  sm:mx-auto flex-col flex items-center justify-center  bg-hero-pattern mx-1 bg-cover">
+      <div className="relative bg-background-3 h-auto md:w-[500px] rounded-lg md:p-6 px-12 py-8">
         <h3 className="text-center mb-6 text-3xl  text-secondary-3 font-semibold">
           Welcome To Sociable
         </h3>
-
+        <div className="absolute w-[90%] top-14 mx-auto h-10 mb-10 text-center">
+          {notification.type === 'error' && (
+            <ErrorNotification
+              message={notification.message}
+              type={notification.type}
+            />
+          )}
+        </div>
         <form
           onSubmit={handleLogin}
           className="flex flex-col mx-auto gap-4 md:w-[60%]"

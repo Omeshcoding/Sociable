@@ -85,7 +85,7 @@ const CreatePost = () => {
               />
               <label
                 htmlFor="upload-file"
-                className=" text-background-3 font-semibold text-[17px] max-md:text-sm  first-letter: px-4 py-3   bg-secondary-3  hover:bg-background-1 rounded-lg border-none "
+                className=" text-background-3 font-semibold text-[17px] max-md:text-sm  first-letter: px-4 py-3   bg-secondary-3 cursor-pointer  hover:bg-background-1 rounded-lg border-none "
               >
                 Upload image
               </label>
