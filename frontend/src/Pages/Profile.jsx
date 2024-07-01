@@ -4,6 +4,8 @@ import abstract from '../assets/abstract.jpg';
 import { useParams } from 'react-router-dom';
 import { AuthData } from '../auth/AuthWrapper';
 import { PostData } from '../context/PostWrapper';
+import Loading from '../Components/Loading';
+import { Suspense } from 'react';
 
 const Profile = () => {
   const { user = {} } = AuthData() || {};
@@ -31,22 +33,28 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="mx-auto mb-20 lg:mb-5">
-            <CreatePost />
-            {singlePost?.length === 0 ? (
-              <p className="text-center text-2xl font-semibold border-secondary-3 border-2 py-1 rounded-md">
-                No post Here
-              </p>
-            ) : (
-              singlePost &&
-              singlePost?.map((post) => {
-                return (
-                  <div key={post?.id}>
-                    <Post posts={post} user={user} />
-                  </div>
-                );
-              })
-            )}
+          <div
+            className={`mx-auto  lg:mb-5 ${
+              user?.id !== id ? 'my-24' : 'mb-20'
+            }`}
+          >
+            {user?.id === id && <CreatePost />}
+            <Suspense fallback={<Loading />}>
+              {singlePost?.length === 0 ? (
+                <p className="my-10 text-center text-2xl font-semibold border-secondary-3 border-2 py-1 rounded-md">
+                  No post Here
+                </p>
+              ) : (
+                singlePost &&
+                singlePost?.map((post) => {
+                  return (
+                    <div key={post?.id}>
+                      <Post posts={post} user={user} />
+                    </div>
+                  );
+                })
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
