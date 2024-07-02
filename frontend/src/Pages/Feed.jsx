@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { CreatePost } from '../Components';
 import Posts from '../Components/Posts';
 import postService from '../services/posts';
@@ -7,6 +7,7 @@ import { PostData } from '../context/PostWrapper';
 
 import { FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Loading from '../Components/Loading';
 const Feed = () => {
   const { user = {} } = AuthData() || {};
   const { allPosts = [] } = PostData() || [];
@@ -62,17 +63,19 @@ const Feed = () => {
                 Users
               </h4>
               <div className="flex flex-col pl-12">
-                {users?.map((user) => {
-                  return (
-                    <Link
-                      to={`/profile/${user?.id}`}
-                      key={user?.id}
-                      className="mt-4 text-background-3 font-semibold capitalize text-left cursor-pointer"
-                    >
-                      {user?.name}
-                    </Link>
-                  );
-                })}
+                <Suspense fallback={<Loading />}>
+                  {users?.map((user) => {
+                    return (
+                      <Link
+                        to={`/profile/${user?.id}`}
+                        key={user?.id}
+                        className="mt-4 text-background-3 font-semibold capitalize text-left cursor-pointer"
+                      >
+                        {user?.name}
+                      </Link>
+                    );
+                  })}
+                </Suspense>
               </div>
             </div>
           </div>
