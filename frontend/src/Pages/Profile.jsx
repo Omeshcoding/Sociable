@@ -1,12 +1,12 @@
 import { CreatePost } from '../Components';
-import Post from '../Components/Post';
 import abstract from '../assets/abstract.jpg';
 import { useParams } from 'react-router-dom';
 import { AuthData } from '../auth/AuthWrapper';
 import { PostData } from '../context/PostWrapper';
-import Loading from '../Components/Loading';
-import { Suspense } from 'react';
+import Loading from '../Components/Loaders/Loading';
+import { Suspense, lazy } from 'react';
 
+const Post = lazy(() => import('../Components/Post'));
 const Profile = () => {
   const { user = {} } = AuthData() || {};
   const { allPosts = [] } = PostData() || [];
@@ -39,22 +39,22 @@ const Profile = () => {
             }`}
           >
             {user?.id === id && <CreatePost />}
-            <Suspense fallback={<Loading />}>
-              {singlePost?.length === 0 ? (
-                <p className="my-10 text-center text-2xl font-semibold border-secondary-3 border-2 py-1 rounded-md">
-                  No post Here
-                </p>
-              ) : (
-                singlePost &&
-                singlePost?.map((post) => {
-                  return (
+            {singlePost?.length === 0 ? (
+              <p className="my-10 text-center text-2xl font-semibold border-secondary-3 border-2 py-1 rounded-md">
+                No post Here
+              </p>
+            ) : (
+              singlePost &&
+              singlePost?.map((post) => {
+                return (
+                  <Suspense fallback={<Loading />}>
                     <div key={post?.id}>
                       <Post posts={post} user={user} />
                     </div>
-                  );
-                })
-              )}
-            </Suspense>
+                  </Suspense>
+                );
+              })
+            )}
           </div>
         </div>
       </div>

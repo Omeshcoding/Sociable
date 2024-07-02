@@ -6,7 +6,7 @@ import loginService from '../services/login';
 import { Link } from 'react-router-dom';
 import { ErrorNotification } from '../Components/ErrorHandler';
 import { AuthData } from '../auth/AuthWrapper';
-import Loading from '../Components/Loading';
+import Loading from '../Components/Loaders/Loading';
 const Login = () => {
   const { login } = AuthData() || {};
 

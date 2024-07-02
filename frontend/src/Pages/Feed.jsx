@@ -1,13 +1,16 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { CreatePost } from '../Components';
-import Posts from '../Components/Posts';
 import postService from '../services/posts';
 import { AuthData } from '../auth/AuthWrapper';
 import { PostData } from '../context/PostWrapper';
 
 import { FaUsers } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import Loading from '../Components/Loading';
+
+import Loading from '../Components/Loaders/Loading';
+
+const Posts = lazy(() => import('../Components/Posts'));
+const AllUsers = lazy(() => import('../Components/AllUsers'));
+
 const Feed = () => {
   const { user = {} } = AuthData() || {};
   const { allPosts = [] } = PostData() || [];
@@ -33,14 +36,18 @@ const Feed = () => {
         <div className=" flex flex-row w-[100%] lg:w-[80%] ml-auto ">
           <div className="mx-auto ">
             <CreatePost addNewPost={handleAddPosts} />
-            {allPosts &&
-              allPosts?.map((post) => {
-                return (
-                  <div key={post.id}>
-                    <Posts post={post} user={user} />
-                  </div>
-                );
-              })}
+            <div>
+              {allPosts &&
+                allPosts?.map((post) => {
+                  return (
+                    <Suspense fallback={<Loading />}>
+                      <div key={post.id}>
+                        <Posts post={post} user={user} />
+                      </div>
+                    </Suspense>
+                  );
+                })}
+            </div>
           </div>
           <div className="w-[240px] max-lg:hidden" />
           <button
@@ -59,23 +66,17 @@ const Feed = () => {
             onMouseLeave={() => setShow(!show)}
           >
             <div className=" ">
-              <h4 className="font-bold bg-background-3 text-center rounded-md py-1 text-white w-full text-xl mb-12 ">
+              <h4 className="font-bold bg-background-3 text-center rounded-md py-1 text-white w-full text-xl mb-4 ">
                 Users
               </h4>
               <div className="flex flex-col pl-12">
-                <Suspense fallback={<Loading />}>
-                  {users?.map((user) => {
-                    return (
-                      <Link
-                        to={`/profile/${user?.id}`}
-                        key={user?.id}
-                        className="mt-4 text-background-3 font-semibold capitalize text-left cursor-pointer"
-                      >
-                        {user?.name}
-                      </Link>
-                    );
-                  })}
-                </Suspense>
+                {users?.map((user) => {
+                  return (
+                    <Suspense fallback={<Loading />}>
+                      <AllUsers name={user?.name} id={user?.id} />
+                    </Suspense>
+                  );
+                })}
               </div>
             </div>
           </div>
