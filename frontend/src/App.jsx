@@ -7,8 +7,7 @@ import SharedLayout from './constants/SharedLayout';
 import Register from './Components/Register';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import { PostWrapper } from './context/PostWrapper';
-import { Suspense } from 'react';
-import Loading from './Components/Loading';
+import ScrollToTop from './constants/ScrolltoTop';
 
 function App() {
   return (
@@ -38,9 +37,9 @@ function App() {
               element={
                 <PostWrapper>
                   <ProtectedRoute>
-                    <Suspense fallback={<Loading />}>
+                    <ScrollToTop>
                       <Profile />
-                    </Suspense>
+                    </ScrollToTop>
                   </ProtectedRoute>
                 </PostWrapper>
               }

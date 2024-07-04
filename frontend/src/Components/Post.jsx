@@ -10,7 +10,7 @@ import Comment from './Comment';
 
 import { createdTime } from '../helper/createdDate';
 import { PostData } from '../context/PostWrapper';
-import Loading from './Loading';
+import Loading from './Loaders/Loading';
 import PostHeader from './Post/PostHeader';
 import Editsubmenu from './Post/Editsubmenu';
 import ActionPrompts from './ReusableComponents/ActionPrompts';
@@ -157,7 +157,7 @@ const Post = ({ posts, user }) => {
               </p>
               <p className=" text-md text-gray-600">{post.caption}</p>
             </div>
-            {post?.image !== null && (
+            {post?.image && (
               <div>
                 <Suspense fallback={<Loading />}>
                   {' '}
@@ -200,6 +200,12 @@ const Post = ({ posts, user }) => {
               </button>
             </div>
             <div className="w-[100%] mx-auto text-left bg-white px-4 py-3 rounded-md ">
+              <CreateCommentForm
+                handleAddComment={handleAddComment}
+                post={post}
+                isSubmitting={isSubmitting}
+                id={user?.id}
+              />
               {post?.comments?.length !== undefined && showmodal.comment
                 ? post.comments.map((item) => {
                     return (
@@ -229,12 +235,6 @@ const Post = ({ posts, user }) => {
                       handleDeleteComment={handleDeleteComment}
                     />
                   )}
-              <CreateCommentForm
-                handleAddComment={handleAddComment}
-                post={post}
-                isSubmitting={isSubmitting}
-                id={user?.id}
-              />
             </div>
           </div>
         </div>
