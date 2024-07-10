@@ -126,10 +126,13 @@ const Login = () => {
             </form>
           </div>
         </div>
-        <p className="pt-10 pb-6 text-center">
+        <p className="pt-6  text-center text-gray-600">
           © 2024 <strong>Sociable</strong>. "Share Innovation, Spark Ideas,
           Connect with the Future" is a trademark of <strong>Sociable</strong>.
-          All rights reserved.
+          <br />
+        </p>
+        <p className="pt-2 pb-6 text-center text-gray-600">
+          All rights reserved. Created by <strong>Umesh</strong>.
         </p>
       </div>
     </>
