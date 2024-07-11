@@ -72,7 +72,7 @@ const Login = () => {
         </div>
       </div>
       <div className=" bg-[#F8F4C1]   h-auto">
-        <div className="flex items-center justify-between mx-auto  min-[450px]:w-[85%] md:h-[92vh] max-md:flex-col gap-10">
+        <div className="flex items-center justify-between mx-auto  min-[450px]:w-[85%] md:h-[82vh] max-md:flex-col gap-10">
           <div className="max-md:text-center  max-md:mx-1">
             <h1 className="  max-md:text-3xl text-4xl font-bold text-background-3  max-md:mt-14">
               Welcome To Sociable
@@ -82,7 +82,7 @@ const Login = () => {
             </p>
             <img src="/hero.webp" alt="sociable" className="" />
           </div>
-          <div className="relative bg-background-3/95 h-auto sm:w-[500px] w-[100%] mx-2 rounded-lg md:p-6 px-6 md:px-12 py-12">
+          <div className="relative bg-background-3/95 h-auto sm:w-[500px] w-[95%] mx-2 rounded-lg md:p-6 px-6 md:px-8 py-12">
             <h3 className="text-center mb-8 text-3xl  text-secondary-3 font-semibold">
               Login Now
             </h3>
@@ -126,10 +126,13 @@ const Login = () => {
             </form>
           </div>
         </div>
-        <p className="pt-10 pb-6 text-center">
+        <p className="pt-6  text-center text-gray-600">
           © 2024 <strong>Sociable</strong>. "Share Innovation, Spark Ideas,
           Connect with the Future" is a trademark of <strong>Sociable</strong>.
-          All rights reserved.
+          <br />
+        </p>
+        <p className="pt-2 pb-6 text-center text-gray-600">
+          All rights reserved. Created by <strong>Umesh</strong>.
         </p>
       </div>
     </>
