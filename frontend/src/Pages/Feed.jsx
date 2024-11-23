@@ -7,6 +7,7 @@ import { PostData } from '../context/PostWrapper';
 import { FaUsers } from 'react-icons/fa';
 
 import Loading from '../Components/Loaders/Loading';
+import Spinner from '../Components/Loaders/Spinner';
 
 const Posts = lazy(() => import('../Components/Posts'));
 const AllUsers = lazy(() => import('../Components/AllUsers'));
@@ -40,7 +41,7 @@ const Feed = () => {
               {allPosts &&
                 allPosts?.map((post) => {
                   return (
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<Spinner style="py-20 h-[500px]" />}>
                       <div key={post.id}>
                         <Posts post={post} user={user} />
                       </div>
@@ -72,7 +73,7 @@ const Feed = () => {
               <div className="flex flex-col pl-12">
                 {users?.map((user) => {
                   return (
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<Spinner style="py-20 h-[400px]" />}>
                       <AllUsers name={user?.name} id={user?.id} />
                     </Suspense>
                   );
