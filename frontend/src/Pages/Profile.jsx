@@ -40,8 +40,8 @@ const Profile = () => {
           >
             {user?.id === id && <CreatePost />}
             {singlePost?.length === 0 ? (
-              <p className="my-10 text-center text-2xl font-semibold border-secondary-3 border-2 py-1 rounded-md">
-                No post Here
+              <p className="my-10 w-[300px] px-4 md:w-[500px] py-4 text-center text-2xl font-semibold border-secondary-3 border-2 mx-auto rounded-md">
+                User hasn't added any post yet
               </p>
             ) : (
               singlePost &&
