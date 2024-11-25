@@ -5,6 +5,7 @@ import userService from '../services/newUser';
 import { Link, Navigate } from 'react-router-dom';
 import Footer from './ReusableComponents/Footer';
 import Spinner from './Loaders/Spinner';
+import { ErrorNotification } from './ErrorHandler';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,10 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [newUser, setNewUser] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState({
+    message: '',
+    type: '',
+  });
   const handleRegisterUser = async (e) => {
     e.preventDefault();
 
@@ -28,6 +33,13 @@ const Register = () => {
       setIsSubmitting(false);
     } catch (error) {
       console.log(error.message);
+      setNotification({
+        message: error.message,
+        type: 'error',
+      });
+      setTimeout(() => {
+        setNotification({ message: '', type: '' });
+      }, 5000);
       setIsSubmitting(false);
     }
   };
@@ -67,10 +79,18 @@ const Register = () => {
               className="w-[60%] max-sm:mx-auto ml-10 my-10"
             />
           </div>
-          <div className="bg-background-3/95 h-auto md:w-[600px] w-[95%] mx-2 rounded-lg md:p-6 px-6 md:px-8 py-12">
+          <div className="relative bg-background-3/95 h-auto md:w-[600px] w-[95%] mx-2 rounded-lg md:p-6 px-6 md:px-8 py-12">
             <h3 className="text-left mb-8 text-3xl  text-secondary-3 font-semibold">
               Register Now
             </h3>
+            <div className="absolute max-md:left-6 left-7  w-[90%] top-16 max-sm:top-[92px]  h-10 mb-10 text-center">
+              {notification.type === 'error' && (
+                <ErrorNotification
+                  message={notification.message}
+                  type={notification.type}
+                />
+              )}
+            </div>
             <form
               onSubmit={handleRegisterUser}
               className="flex flex-col mx-auto gap-4 "
