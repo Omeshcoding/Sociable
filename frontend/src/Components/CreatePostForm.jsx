@@ -1,4 +1,4 @@
-import Button from '././Button';
+import Button from '././ReusableComponents/Button';
 import FormHeader from './Forms/FormHeader';
 
 const CreatePostForm = ({ postUpdate, handleUpdatePost, setPostUpdate }) => {
