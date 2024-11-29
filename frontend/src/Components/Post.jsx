@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import postService from '../services/posts';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa';
@@ -14,6 +14,9 @@ import Loading from './Loaders/Loading';
 import PostHeader from './Post/PostHeader';
 import Editsubmenu from './Post/Editsubmenu';
 import ActionPrompts from './ReusableComponents/ActionPrompts';
+import Spinner from './Loaders/Spinner';
+
+const Image = lazy(() => import('./ReusableComponents/Image'));
 
 const Post = ({ posts, user }) => {
   const { removePost } = PostData() || [];
@@ -159,13 +162,13 @@ const Post = ({ posts, user }) => {
             </div>
             {post?.image && (
               <div>
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<Spinner style="h-[300px] p-10" />}>
                   {' '}
-                  <img
-                    src={post?.image}
-                    alt={post?.text}
+                  <Image
+                    srcImage={post?.image}
+                    altText={post?.text}
                     loading="lazy"
-                    className="bg-cover object-center bg-center bg-slate-300  w-[100%] md:w-[auto] rounded-md"
+                    style="bg-cover object-center bg-center bg-slate-300  w-[100%] md:w-[auto] rounded-md"
                   />
                 </Suspense>
               </div>
@@ -243,4 +246,10 @@ const Post = ({ posts, user }) => {
   );
 };
 
+async function delayLoadingContent(promise) {
+  await new Promise((resolve) => {
+    setTimeout(resolve, 6000);
+  });
+  return promise;
+}
 export default Post;

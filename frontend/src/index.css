@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-}
-
 .loader,
 .loader:before,
 .loader:after {
@@ -41,7 +38,7 @@ body {
 .loader:after {
   left: 1.5em;
 }
-@-webkit-keyframes load1 {
+/* @-webkit-keyframes load1 {
   0%,
   80%,
   100% {
@@ -65,7 +62,7 @@ body {
     height: 5em;
   }
 }
-
+ */
 /* HTML: <div class="loader"></div> */
 .post_loader {
   color: var(--primaryColor);

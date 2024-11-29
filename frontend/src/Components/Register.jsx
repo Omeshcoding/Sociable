@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Input from './Input';
-import Button from './Button';
+import Button from '../Components/ReusableComponents/Button';
 import userService from '../services/newUser';
 import { Link, Navigate } from 'react-router-dom';
 
