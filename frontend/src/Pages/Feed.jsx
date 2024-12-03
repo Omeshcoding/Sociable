@@ -6,7 +6,6 @@ import { PostData } from '../context/PostWrapper';
 
 import { FaUsers } from 'react-icons/fa';
 
-import Loading from '../Components/Loaders/Loading';
 import Spinner from '../Components/Loaders/Spinner';
 
 const Posts = lazy(() => import('../Components/Posts'));
