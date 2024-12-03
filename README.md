@@ -1,6 +1,6 @@
 # Sociable
 
-Welcome to Sociable, a vibrant and interactive photo-sharing web application that brings people together through the art of photography. Sociable provides a seamless platform for users to share, discover, and connect over captivating visual stories.
+Sociable is a dynamic and interactive photo-sharing web application designed to foster user connections. The frontend is developed using React, while the backend is powered by Node.js, utilizing MongoDB for database management and Cloudinary for photo storage and sharing. Additionally, Sociable incorporates JWT for secure user authentication, providing a seamless platform for individuals to share, explore, and engage with captivating visual narratives.
 
 ## Key Features:
 
