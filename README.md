@@ -87,9 +87,9 @@ Sociable is a full-stack web app for photo-sharing, and fostering user connectio
 
 ```
 root
-├── client          # Frontend code (React.js)
-├── server          # Backend code (Node.js, Express.js)
-└── README.md       # Project documentation
+├── frontend          # Frontend code (React.js)
+├── backend           # Backend code (Node.js, Express.js)
+└── README.md         # Project documentation
 ```
 
 ## Acknowledgments
